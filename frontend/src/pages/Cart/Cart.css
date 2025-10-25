@@ -1,0 +1,204 @@
+.cart {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background: #fafafa;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+
+/* ===== Cart Items Table ===== */
+
+.cart-items {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem 2rem;
+    overflow-x: auto;
+}
+
+.cart-items-title {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 1fr 1fr 1fr 0.5fr;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.cart-items-item {
+    font-weight: 400;
+    color: #555;
+    padding: 0.5rem 0;
+}
+
+.cart-items img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    justify-self: center;
+}
+
+
+/* Divider lines */
+
+.cart-items hr {
+    border: none;
+    height: 1px;
+    background: #eee;
+    margin: 0.6rem 0;
+}
+
+
+/* Remove “X” button */
+
+.cross {
+    color: tomato;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.cross:hover {
+    color: #e5533d;
+    transform: scale(1.2);
+}
+
+
+/* ===== Bottom Section (Totals + Promo) ===== */
+
+.cart-botton {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+
+/* ===== Cart Totals ===== */
+
+.cart-total {
+    flex: 1;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+}
+
+.cart-total h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.cart-total-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    color: #555;
+    font-size: 1rem;
+}
+
+.cart-total hr {
+    border: none;
+    height: 1px;
+    background: #eee;
+    margin: 0.6rem 0;
+}
+
+.cart-total b {
+    color: #222;
+}
+
+.cart-total button {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    background-color: tomato;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cart-total button:hover {
+    background-color: #e5533d;
+    transform: translateY(-2px);
+}
+
+
+/* ===== Promo Code Section ===== */
+
+.cart-promocode {
+    display: flex;
+    /* flex: 1; */
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cart-promocode p {
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+
+/* .cart-promocode-input {
+    display: flex;
+    gap: 1rem;
+} */
+
+.cart-promocode-input input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-promocode-input input:focus {
+    border-color: tomato;
+    box-shadow: 0 0 6px rgba(255, 99, 71, 0.3);
+    outline: none;
+}
+
+.cart-promocode-input button {
+    padding: 0.8rem 1.5rem;
+    background-color: tomato;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cart-promocode-input button:hover {
+    background-color: #e5533d;
+    transform: translateY(-2px);
+}
+
+
+/* ===== Responsive Design ===== */
+
+@media (max-width: 900px) {
+    .cart-items-title {
+        grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
+        font-size: 0.9rem;
+    }
+    .cart-botton {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,110 @@
+.explor-menu {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: #fffaf7;
+    font-family: 'Poppins', sans-serif;
+}
+
+.explor-menu h1 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.explor-menu-text {
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+
+/* ===== Menu Category List ===== */
+
+.explore-menu-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+
+/* ===== Individual Menu Item ===== */
+
+.explore-menu-list-item {
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 16px;
+    background: #fff;
+    padding: 1rem;
+    width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.explore-menu-list-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(255, 99, 71, 0.3);
+}
+
+
+/* ===== Menu Item Image ===== */
+
+.explore-menu-list-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: border 0.3s ease, transform 0.3s ease;
+    border: 3px solid transparent;
+}
+
+
+/* Highlight the selected category */
+
+.explore-menu-list-item img.active {
+    border: 3px solid tomato;
+    transform: scale(1.05);
+}
+
+
+/* ===== Menu Item Text ===== */
+
+.explore-menu-list-item p {
+    margin-top: 0.7rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+
+/* ===== Divider Line ===== */
+
+.explor-menu hr {
+    margin-top: 2rem;
+    border: none;
+    height: 1px;
+    background: #eee;
+    width: 90%;
+    margin-inline: auto;
+}
+
+
+/* ===== Responsive Design ===== */
+
+@media (max-width: 768px) {
+    .explore-menu-list-item {
+        width: 130px;
+        padding: 0.8rem;
+    }
+    .explor-menu h1 {
+        font-size: 1.6rem;
+    }
+    .explor-menu-text {
+        font-size: 0.95rem;
+    }
+}

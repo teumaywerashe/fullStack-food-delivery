@@ -1,0 +1,124 @@
+.place-order {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    background: #fafafa;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.place-order-left,
+.place-order-right {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.place-order-left {
+    flex: 2;
+}
+
+.place-order-right {
+    flex: 1;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+
+/* Input fields */
+
+input,
+PhoneInput {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus PhoneInput:focus {
+    outline: none;
+    border-color: tomato;
+    box-shadow: 0 0 6px rgba(255, 99, 71, 0.4);
+}
+
+
+/* Two-column input groups */
+
+.multi-fields {
+    display: flex;
+    gap: 1rem;
+}
+
+.multi-fields input {
+    flex: 1;
+}
+
+
+/* Right side (Cart Total Section) */
+
+.cart-total h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.cart-total-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    color: #555;
+    font-size: 1rem;
+}
+
+.cart-total hr {
+    border: none;
+    height: 1px;
+    background: #eee;
+    margin: 0.6rem 0;
+}
+
+.cart-total b {
+    color: #222;
+}
+
+button {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    background-color: tomato;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #e5533d;
+    transform: translateY(-2px);
+}
+
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .place-order {
+        flex-direction: column;
+    }
+    .place-order-left,
+    .place-order-right {
+        width: 100%;
+    }
+}
