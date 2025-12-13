@@ -1,7 +1,10 @@
 import React from "react";
 import "./Footer.css";
-import { assets } from "../../asset/assets";
+// import { assets } from "../../asset/assets";
+// import {assets} from '../../../../admin/src/assets/assets.js'
+
 import { Link } from "react-router-dom";
+import { assets } from "../../assets/assets.js";
 const Footer = () => {
   const year = new Date().getFullYear();
   return (

@@ -1,7 +1,12 @@
 import React from "react";
 import "./ExploreMenu.css";
-import { menu_list } from "../../asset/assets";
+import { menu_list } from "../../assets/assets.js";
+import { useNavigate } from "react-router-dom";
+// import {menu_list} from '../../../../admin/src/assets/assets.js'
+
 const ExploreMenu = ({ category, setcategory }) => {
+
+  const navigate=useNavigate()
   return (
     <div id="explore-menu" className="explor-menu">
       <h1>Explore our Menu</h1>
@@ -14,10 +19,12 @@ const ExploreMenu = ({ category, setcategory }) => {
         {menu_list.map((item, index) => {
           return (
             <div
-              onClick={() =>
+              onClick={() =>{
                 setcategory((prev) =>
                   item.menu_name === prev ? "All" : item.menu_name
                 )
+                navigate('#food_display')
+              }
               }
               className="explore-menu-list-item"
               key={index}

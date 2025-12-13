@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { assets } from "../../asset/assets";
+// import { assets } from "../../asset/assets";
+import {assets} from '../../../../admin/src/assets/assets.js'
 import axios from "axios";
 import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";

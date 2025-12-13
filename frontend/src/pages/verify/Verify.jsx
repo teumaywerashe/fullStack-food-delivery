@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Verify = () => {
   const { url } = useContext(StoreContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams('');
   const navigate = useNavigate();
   const success = searchParams.get("success");
   const orderId = searchParams.get("orderId");
@@ -22,12 +22,19 @@ const Verify = () => {
       navigate("/");
     }
   };
+
+
+  const updateSearch=(e)=>{
+    setSearchParams(e.target.value)
+  }
   useEffect(() => {
     verifyPayment();
   });
   return (
     <div className="verify">
-      <div className="spinner"></div>
+      <div className="spinner">
+        <input type="text" value={searchParams} onChange={updateSearch} />
+      </div>
     </div>
   );
 };

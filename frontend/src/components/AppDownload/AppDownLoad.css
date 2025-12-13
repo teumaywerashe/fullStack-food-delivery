@@ -9,6 +9,7 @@
 .app-download-platform {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: max(2vw, 10px);
     margin-top: 40px;
 }
@@ -23,4 +24,10 @@
 
 .app-download-platform img:hover {
     transform: scale(1.07);
+}
+
+@media (max-width:648px) {
+    .app-download-platform {
+        flex-direction: column;
+    }
 }

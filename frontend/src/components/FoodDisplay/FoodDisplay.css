@@ -1,5 +1,6 @@
 .food-display {
     margin-top: 30px;
+    width: 100%;
 }
 
 .food-display h2 {
@@ -13,4 +14,22 @@
     margin-top: 30px;
     gap: 30px;
     row-gap: 50px;
+}
+
+.no-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 12px;
+    padding: 20px 20px;
+    margin: 30px 30px;
+    min-width: 600px;
+    border: solid black 1px;
+}
+
+.no-item h3 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 10px auto;
 }
