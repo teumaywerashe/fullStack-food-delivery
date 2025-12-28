@@ -4,10 +4,14 @@ import { assets } from "../../assets/assets";
 
 import { StoreContext } from "../../context/StoreContext";
 import { Link, useNavigate } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
+import { set } from "mongoose";
 function Navbar({ setShowLogin }) {
+  const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState("home");
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const { token, setToken,searchTerm,setSearchTerm, getTotalCart } = useContext(StoreContext);
+  const { token, setToken, searchTerm, setSearchTerm, getTotalCart } =
+    useContext(StoreContext);
   const navigate = useNavigate();
 
   const logOut = () => {
@@ -62,12 +66,72 @@ function Navbar({ setShowLogin }) {
           <Link to="/cart">
             <img src={assets.basket_icon} alt="" />
           </Link>
-          {getTotalCart() > 0 && (
-            <div className="dot">{getTotalCart()}</div>
-          )}
+          {getTotalCart() > 0 && <div className="dot">{getTotalCart()}</div>}
         </div>
+
+        <div
+          onClick={() => {
+            setOpen(!open);
+          }}
+          className="small-media-toggle-button"
+        >
+          {open ? <FiX size={30} /> : <FiMenu size={30} />}
+        </div>
+        {open && (
+          <div className="small-media-menu-container">
+            <ul className="small-media-menu">
+              <Link
+                to="/"
+                onClick={() => {
+                  setMenu("home");
+                  setOpen(false);
+                }}
+                className={menu === "home" ? "active" : ""}
+              >
+                home
+              </Link>
+              <a
+                href="#explore-menu"
+                onClick={() => {
+                  setMenu("menu");
+                  setOpen(false);
+                }}
+                className={menu === "menu" ? "active" : ""}
+              >
+                menu
+              </a>
+              <a
+                href="#app-download"
+                onClick={() => {
+                  setMenu("mobile-app"), setOpen(false);
+                }}
+                className={menu === "mobile-app" ? "active" : ""}
+              >
+                mobile-app
+              </a>
+              <a
+                href="#footer"
+                onClick={() => {
+                  setMenu("contact-us"), setOpen(false);
+                }}
+                className={menu === "contact-us" ? "active" : ""}
+              >
+                contact us
+              </a>
+              <button
+                onClick={() => {
+                  setShowLogin(true);
+                  setOpen(!open);
+                }}
+              >
+                get started
+              </button>
+            </ul>
+          </div>
+        )}
+
         {!token ? (
-          <div className="">
+          <div className="sign-in">
             <button
               onClick={() => {
                 setShowLogin(true);
@@ -76,7 +140,6 @@ function Navbar({ setShowLogin }) {
             >
               sign in
             </button>
-            
           </div>
         ) : (
           <div className="navbar-profile">

@@ -2,14 +2,16 @@ import axios from "axios";
 import { createContext, useState } from "react";
 
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [food_list, setFood_list] = useState([]);
-  const url = import.meta.env.VITE_API_URL;
- 
-  // "http://localhost:3000";
+  const url =
+    //  import.meta.env.VITE_API_URL;
+
+    "http://localhost:4000";
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -49,7 +51,12 @@ const StoreContextProvider = (props) => {
         { headers: { token } }
       );
     } else {
-      alert("Please login to add items to cart");
+      toast.info("Please login to add items to cart", {
+        position: "top-center",
+        color: "blue",
+        bg: "lightgray",
+        height: "50px",
+      });
     }
   };
   const removeFromCart = async (itemId) => {

@@ -30,7 +30,7 @@
     cursor: pointer;
 }
 
-.navbar button {
+.navbar .sign-in button {
     background-color: transparent;
     font-size: 16px;
     color: #49557e;
@@ -46,12 +46,45 @@
 
 .navbar .active {
     padding-bottom: 2px;
-    border-bottom: 3px solid#49557e;
+    border-bottom: 3px solid #49557e;
+}
+
+.small-media-menu .active {
+    color: tomato;
+    border: none;
 }
 
 .navbar-search-icon {
     position: relative;
     cursor: pointer;
+    display: flex;
+    align-items: bottom;
+}
+
+.small-media-menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(20);
+    left: 0px;
+    z-index: 10;
+    background-color: white;
+    padding: 20px 20px;
+    gap: 20px;
+    border: 1px solid rgb(240, 239, 239);
+    width: 100%;
+    cursor: pointer;
+    right: 0px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.small-media-toggle-button {
+    display: none;
+    padding: 2px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .navbar-signin-button {
@@ -64,6 +97,7 @@
     display: flex;
     top: 0;
     gap: 10px;
+    font-size: 36px;
     right: 0;
     z-index: 10;
     padding: 10px 10px;
@@ -177,5 +211,8 @@
     }
     .navbar-signin-button {
         display: none;
+    }
+    .small-media-toggle-button {
+        display: flex;
     }
 }

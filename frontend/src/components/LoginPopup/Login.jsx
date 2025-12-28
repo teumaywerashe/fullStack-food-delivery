@@ -35,6 +35,7 @@ const Login = ({ setShowLogin }) => {
     if (response.data.success) {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
+      console.log(response.data);
       setShowLogin(false);
     } else {
       alert(response.data.msg);
@@ -82,8 +83,8 @@ const Login = ({ setShowLogin }) => {
         </div>
         <button>{currentState === "Sign Up" ? "sign up" : "Login"}</button>
         <div className="login-popup-condition">
-          <input type="checkbox" requred />
-          <p>by continuing , i agree to the term of use & privacy policy</p>
+          <input id='checkbox' type="checkbox" required />
+          <label htmlFor="checkbox">by continuing , i agree to the term of use & privacy policy</label>
         </div>
         {currentState === "Login" ? (
           <p>

@@ -14,6 +14,7 @@
         align-items: start;
         max-width: 50%;
         bottom: 10%;
+        top: -25px;
         left: 6vw;
         animation: fadeIn 3s;
     }
@@ -21,6 +22,7 @@
     .header-content h2 {
         font-weight: 500;
         color: white;
+        margin-top: 20px;
         font-size: max(4.5vw, 22px);
     }
     

@@ -59,14 +59,17 @@
     
     .login-popup-condition {
         display: flex;
-        align-items: start;
+        cursor: pointer;
+        align-items: center;
         justify-items: start;
-        gap: 1px;
-        margin-top: -15px;
+        gap: 10px;
     }
     
     .login-popup-condition input {
         margin-top: 4px;
+        margin-left: 0px;
+        place-content: start;
+        width: 30px;
     }
     
     .login-popup-container p span {
