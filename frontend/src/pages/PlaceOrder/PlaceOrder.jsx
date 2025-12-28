@@ -53,10 +53,10 @@ const PlaceOrder = () => {
       });
       if (response.data.success) {
         console.log(response.data);
-        const { session_url } = response.data;
-        window.open(session_url);
+        const { checkout_url } = response.data;
+        window.location.href = checkout_url;
       } else {
-        alert("error");
+        alert("Payment initialization failed");
       }
     }
   };
@@ -68,6 +68,10 @@ const PlaceOrder = () => {
       navigate("/cart");
     }
   }, [token]);
+
+  useEffect(() => {
+   console.log(data);
+  }, [data]); 
   return (
     <form onSubmit={PlaceOrder} type="submit" className="place-order">
       <div className="place-order-left">

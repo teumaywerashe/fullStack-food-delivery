@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import foodRouter from "./routes/foodRouter.js";
 import connectDB from "./config/db.js";
-import userRouter from "./routes/UserRoute.js";
+import userRouter from "./routes/userRoute.js";
 import "dotenv/config.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
