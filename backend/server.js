@@ -10,7 +10,10 @@ import orderRouter from "./routes/orderRoute.js";
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:5173", /\.onrender\.com$/],
+    credentials: true,
+}));
 app.use(express.json());
 
 connectDB(process.env.MONGO_URL);

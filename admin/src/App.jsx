@@ -7,8 +7,14 @@ import { ToastContainer } from "react-toastify";
 import List from "../pages/List/List";
 import Orders from "../pages/Orders/Orders";
 import Add from "../pages/Add/Add";
+import { useEffect } from "react";
 function App() {
   const url = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    document.title = "Admin Panel - Food Delivery App";
+    console.log(url);
+  }, []); 
   // "http://localhost:3000";
   return (
     <div>

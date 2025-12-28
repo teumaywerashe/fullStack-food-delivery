@@ -8,6 +8,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const [food_list, setFood_list] = useState([]);
   const url = import.meta.env.VITE_API_URL;
+ 
   // "http://localhost:3000";
 
   const [searchTerm, setSearchTerm] = useState("");
