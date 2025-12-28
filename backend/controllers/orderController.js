@@ -1,7 +1,7 @@
 import orderModel from "../models/orderModel.js";
 import Stripe from "stripe";
 import axios from 'axios'
-import userModel from "../models/UserModel.js";
+import userModel from "../models/userModel.js";
 const chapaSecretKey = process.env.CHAPA_SECRET_KEY;
 // export const placeOrder = async(req, res) => {
 //     try {
