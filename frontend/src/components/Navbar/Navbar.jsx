@@ -5,7 +5,6 @@ import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-import { set } from "mongoose";
 function Navbar({ setShowLogin }) {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState("home");
