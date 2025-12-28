@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Login.css";
 // import { assets } from "../../asset/assets";
-import {assets} from '../../../../admin/src/assets/assets.js'
+// import {assets} from '../../../../admin/src/assets/assets.js'
 import axios from "axios";
 import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
+import { assets } from "../../assets/assets.js";
 
 const Login = ({ setShowLogin }) => {
   const [currentState, setCurrentState] = useState("Login");
@@ -50,7 +51,7 @@ const Login = ({ setShowLogin }) => {
           <img
             onClick={() => setShowLogin(false)}
             src={assets.cross_icon}
-            alt=""
+            alt="X"
           />
         </div>
         <div className="login-popup-input">

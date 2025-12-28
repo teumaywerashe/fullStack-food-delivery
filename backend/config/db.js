@@ -1,8 +1,9 @@
 import mongoose from "mongoose"
 const connectDB = (url) => {
     mongoose.connect(url, {
-
-    }).then(() => console.log('DB connected'))
+            connectTimeoutMS: 10000,
+        }).then(() => console.log('DB connected'))
+        // .catch(() => console.log('wa');)
 
 }
 

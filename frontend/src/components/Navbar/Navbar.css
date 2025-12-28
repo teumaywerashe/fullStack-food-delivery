@@ -1,8 +1,9 @@
 .navbar {
-    padding: 20px 0px;
+    position: relative;
+    padding: 5px 0px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
 }
 
 .navbar .logo {
@@ -20,7 +21,8 @@
 
 .navbar-right {
     display: flex;
-    align-items: center;
+    align-items: end;
+    justify-content: center;
     gap: 40px;
 }
 
@@ -54,6 +56,27 @@
 
 .navbar-button {
     cursor: pointer;
+}
+
+.searchbar-container {
+    position: absolute;
+    background-color: white;
+    display: flex;
+    top: 0;
+    gap: 10px;
+    right: 0;
+    z-index: 10;
+    padding: 10px 10px;
+    width: 100%;
+}
+
+.searchbar-container img {
+    height: 20px;
+    cursor: pointer;
+}
+
+.searchbar-container input {
+    outline: none;
 }
 
 .navbar-search-icon .dot {
@@ -148,5 +171,8 @@
 @media(max-width:700px) {
     .navbar-menu {
         display: none;
+    }
+    .navbar-button {
+        padding: 0px 0px;
     }
 }

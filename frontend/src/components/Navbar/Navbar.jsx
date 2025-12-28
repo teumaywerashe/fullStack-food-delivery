@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
 import "./Navbar.css";
 import { assets } from "../../assets/assets";
-// import {assets} from '../../../../admin/src/assets/assets.js'
 
 import { StoreContext } from "../../context/StoreContext";
 import { Link, useNavigate } from "react-router-dom";
 function Navbar({ setShowLogin }) {
   const [menu, setMenu] = useState("home");
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const { token, setToken, getTotalCart } = useContext(StoreContext);
   const navigate = useNavigate();
+
   const logOut = () => {
     localStorage.removeItem("token");
     setToken("");
@@ -52,7 +53,12 @@ function Navbar({ setShowLogin }) {
         </a>
       </ul>
       <div className="navbar-right">
-        <img src={assets.search_icon} alt="" />
+        <img
+          onClick={() => setShowSearchBar(!showSearchBar)}
+          src={assets.search_icon}
+          alt=""
+        />
+
         <div className="navbar-search-icon">
           <Link to="/cart">
             <img src={assets.basket_icon} alt="" />
@@ -64,19 +70,21 @@ function Navbar({ setShowLogin }) {
           )}
         </div>
         {!token ? (
-          <button
-            onClick={() => {
-              setShowLogin(true);
-            }}
-            className="navbar-button"
-          >
-            sign in
-          </button>
+          <div className="">
+            <button
+              onClick={() => {
+                setShowLogin(true);
+              }}
+              className="navbar-button"
+            >
+              sign in
+            </button>
+          </div>
         ) : (
           <div className="navbar-profile">
             <img src={assets.profile_icon} alt="profile" />
             <ul className="navbar-profile-dropdown">
-              <li onClick={()=>navigate('/myOrders')}>
+              <li onClick={() => navigate("/myOrders")}>
                 <img src={assets.bag_icon} alt="" />
                 orders
               </li>
@@ -89,6 +97,21 @@ function Navbar({ setShowLogin }) {
           </div>
         )}
       </div>
+      {showSearchBar && (
+        <div className="searchbar-container">
+          <input
+            placeholder="Enter the item you want to search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
+            type="text"
+          />
+          <img
+            onClick={() => setShowSearchBar(!showSearchBar)}
+            src={assets.cross_icon}
+            alt=""
+          />
+        </div>
+      )}
     </div>
   );
 }

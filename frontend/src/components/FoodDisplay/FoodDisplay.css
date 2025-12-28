@@ -19,16 +19,19 @@
 .no-item {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     border-radius: 12px;
     padding: 20px 20px;
-    margin: 30px 30px;
-    min-width: 600px;
+    margin: 30px auto;
+    max-width: 1000px;
     border: solid black 1px;
 }
 
-.no-item h3 {
+.no-item h1 {
+    color: red;
     display: flex;
+    margin-bottom: 20px;
     align-items: center;
     text-align: center;
     margin: 10px auto;
