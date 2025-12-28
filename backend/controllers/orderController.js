@@ -54,7 +54,7 @@ export const placeOrder = async(req, res) => {
     try {
 
 
-        // 1️⃣ Save the order first
+
         const newOrder = new orderModel({
             userId: req.userId,
             items: req.body.items,
@@ -65,14 +65,14 @@ export const placeOrder = async(req, res) => {
         await newOrder.save();
         await userModel.findByIdAndUpdate(req.userId, { cartData: {} });
 
-        // 2️⃣ Prepare Chapa transaction
+
         const frontend_url = "http://localhost:5173";
-        const tx_ref = `order-${newOrder._id}`; // unique transaction reference
+        const tx_ref = `order-${newOrder._id}`;
 
         const response = await axios.post(
             "https://api.chapa.co/v1/transaction/initialize", {
-                amount: req.body.amount, // total amount
-                currency: "ETB", // Chapa supports ETB
+                amount: req.body.amount,
+                currency: "ETB",
                 email: req.body.email,
                 first_name: req.body.firstName,
                 last_name: req.body.lastName,
@@ -86,7 +86,7 @@ export const placeOrder = async(req, res) => {
             }
         );
 
-        // 3️⃣ Send the Chapa checkout URL to frontend
+
         res.json({ success: true, checkout_url: response.data.data.checkout_url });
     } catch (error) {
         console.log(error);

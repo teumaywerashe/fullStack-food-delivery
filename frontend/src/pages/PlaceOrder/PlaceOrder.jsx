@@ -8,10 +8,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const PlaceOrder = () => {
   const { getTotalAmount, token, food_list, cartItem, url } =
-  useContext(StoreContext);
-  
+    useContext(StoreContext);
+
   const navigate = useNavigate();
-  
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -61,17 +61,21 @@ const PlaceOrder = () => {
     }
   };
 
-
   useEffect(() => {
     if (!token || getTotalAmount() === 0) {
-      alert("Please login and add items to cart first");
+      if (!token) {
+        alert("Please login first");
+      } else {
+        alert("Your cart is empty. Please add items to cart first");
+      }
+
       navigate("/cart");
     }
   }, [token]);
 
   useEffect(() => {
-   console.log(data);
-  }, [data]); 
+    console.log(data);
+  }, [data]);
   return (
     <form onSubmit={PlaceOrder} type="submit" className="place-order">
       <div className="place-order-left">
