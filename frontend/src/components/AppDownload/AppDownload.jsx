@@ -2,7 +2,7 @@ import React from "react";
 // import { assets } from "../../asset/assets.js";
 import {assets} from '../../assets/assets.js'
 
-import "./AppDownload.css";
+import "./AppDownLoad.css";
 const AppDownload = () => {
   return (
     <div className="app-download" id="app-download">

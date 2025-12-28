@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./PlaceOrder.css";
 import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
 import { StoreContext } from "../../context/StoreContext";
 
 import axios from "axios";
@@ -52,7 +51,6 @@ const PlaceOrder = () => {
         headers: { token },
       });
       if (response.data.success) {
-        console.log(response.data);
         const { checkout_url } = response.data;
         window.location.href = checkout_url;
       } else {

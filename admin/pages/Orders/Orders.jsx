@@ -12,14 +12,12 @@ function Orders({ url }) {
     const response = await axios.get(url + "/api/order/list");
     if (response.data.success) {
       setOrders(response.data.data);
-      // console.log(response.data.data);
     } else {
       toast.error("error");
     }
   };
 
   const statusHandler = async (e, orderId) => {
-    // e.preventDefault();
     const response = await axios.post(url + "/api/order/status", {
       orderId,
       status: e.target.value,

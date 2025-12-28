@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useState } from "react";
 
 import { useEffect } from "react";
+
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
@@ -9,7 +10,7 @@ const StoreContextProvider = (props) => {
   const url = import.meta.env.VITE_API_URL;
   // "http://localhost:3000";
 
-  const [searchTerm,setSearchTerm]=useState('')
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [cartItem, setCartItem] = useState({});
   const [token, setToken] = useState("");
@@ -35,17 +36,19 @@ const StoreContextProvider = (props) => {
   }, []);
 
   const addToCart = async (itemId) => {
-    if (!cartItem[itemId]) {
-      setCartItem((pre) => ({ ...pre, [itemId]: 1 }));
-    } else {
-      setCartItem((pre) => ({ ...pre, [itemId]: pre[itemId] + 1 }));
-    }
     if (token) {
+      if (!cartItem[itemId]) {
+        setCartItem((pre) => ({ ...pre, [itemId]: 1 }));
+      } else {
+        setCartItem((pre) => ({ ...pre, [itemId]: pre[itemId] + 1 }));
+      }
       await axios.post(
         url + "/api/cart/add",
         { itemId },
         { headers: { token } }
       );
+    } else {
+      alert("Please login to add items to cart");
     }
   };
   const removeFromCart = async (itemId) => {
@@ -90,7 +93,9 @@ const StoreContextProvider = (props) => {
     removeFromCart,
     getTotalAmount,
     getTotalCart,
-    url,searchTerm,setSearchTerm,
+    url,
+    searchTerm,
+    setSearchTerm,
     token,
     setToken,
   };
