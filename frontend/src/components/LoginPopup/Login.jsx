@@ -8,6 +8,9 @@ import { assets } from "../../assets/assets.js";
 const Login = ({ setShowLogin }) => {
   const [currentState, setCurrentState] = useState("Login");
 
+  const [loading,setLoading]=useState(false);
+
+  const [error, setError] = useState(null);
   const { url, setToken } = useContext(StoreContext);
 
   let [data, setData] = useState({
@@ -17,6 +20,7 @@ const Login = ({ setShowLogin }) => {
   });
 
   const updateData = (e) => {
+    setError(null);
     const name = e.target.name;
     const value = e.target.value;
     setData((pre) => ({ ...pre, [name]: value }));
@@ -24,21 +28,28 @@ const Login = ({ setShowLogin }) => {
 
   const createUser = async (e) => {
     e.preventDefault();
+    setLoading(true)
     let newUrl = url;
     if (currentState === "Login") {
       newUrl += "/api/user/login";
     } else {
       newUrl += "/api/user/register";
     }
-
-    const response = await axios.post(newUrl, data );
-    if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      console.log(response.data);
-      setShowLogin(false);
-    } else {
-      alert(response.data.msg);
+    try {
+      const response = await axios.post(newUrl, data);
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        console.log(response.data);
+        setShowLogin(false);
+      } else {
+        setError(response.data.msg);
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Server Error");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -81,10 +92,13 @@ const Login = ({ setShowLogin }) => {
             required
           />
         </div>
-        <button>{currentState === "Sign Up" ? "sign up" : "Login"}</button>
+        {error && <p className="login-error-message">{error}</p>}
+        <button>{loading ? "Loading..." : currentState === "Sign Up" ? "sign up" : "Login"}</button>
         <div className="login-popup-condition">
-          <input id='checkbox' type="checkbox" required />
-          <label htmlFor="checkbox">by continuing , i agree to the term of use & privacy policy</label>
+          <input id="checkbox" type="checkbox" required />
+          <label htmlFor="checkbox">
+            by continuing , i agree to the term of use & privacy policy
+          </label>
         </div>
         {currentState === "Login" ? (
           <p>

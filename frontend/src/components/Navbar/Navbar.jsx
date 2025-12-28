@@ -61,13 +61,42 @@ function Navbar({ setShowLogin }) {
           alt=""
         />
 
-        <div className="navbar-search-icon">
-          <Link to="/cart">
-            <img src={assets.basket_icon} alt="" />
-          </Link>
-          {getTotalCart() > 0 && <div className="dot">{getTotalCart()}</div>}
-        </div>
+        {token && (
+          <div className="navbar-search-icon">
+            <Link to="/cart">
+              <img src={assets.basket_icon} alt="" />
+            </Link>
+            {getTotalCart() > 0 && <div className="dot">{getTotalCart()}</div>}
+          </div>
+        )}
 
+        {!token ? (
+          <div className="sign-in">
+            <button
+              onClick={() => {
+                setShowLogin(true);
+              }}
+              className="navbar-signin-button"
+            >
+              sign in
+            </button>
+          </div>
+        ) : (
+          <div className="navbar-profile">
+            <img src={assets.profile_icon} alt="profile" />
+            <ul className="navbar-profile-dropdown">
+              <li onClick={() => navigate("/myOrders")}>
+                <img src={assets.bag_icon} alt="" />
+                orders
+              </li>
+              <hr />
+              <li onClick={logOut}>
+                <img src={assets.logout_icon} alt="" />
+                logout
+              </li>
+            </ul>
+          </div>
+        )}
         <div
           onClick={() => {
             setOpen(!open);
@@ -125,34 +154,6 @@ function Navbar({ setShowLogin }) {
               >
                 get started
               </button>
-            </ul>
-          </div>
-        )}
-
-        {!token ? (
-          <div className="sign-in">
-            <button
-              onClick={() => {
-                setShowLogin(true);
-              }}
-              className="navbar-signin-button"
-            >
-              sign in
-            </button>
-          </div>
-        ) : (
-          <div className="navbar-profile">
-            <img src={assets.profile_icon} alt="profile" />
-            <ul className="navbar-profile-dropdown">
-              <li onClick={() => navigate("/myOrders")}>
-                <img src={assets.bag_icon} alt="" />
-                orders
-              </li>
-              <hr />
-              <li onClick={logOut}>
-                <img src={assets.logout_icon} alt="" />
-                logout
-              </li>
             </ul>
           </div>
         )}
