@@ -3,11 +3,18 @@ import "./FoodDisplay.css";
 import { StoreContext } from "../../context/StoreContext";
 import FoodItem from "../FoodItem/FoodItem";
 const FoodDisplay = ({ category }) => {
-  const { food_list } = useContext(StoreContext);
+  const { food_list, searchTerm } = useContext(StoreContext);
 
-  const filtered_items = food_list.filter(
-    (food) => food.category === category || category === "All"
-  );
+
+  const filtered_items = food_list.filter((food) => {
+    const filteredCategory = food.category === category || category === "All";
+
+    const searchedTerm = food.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return filteredCategory && searchedTerm;
+  });
 
   return (
     <div id="food-display" className="food-display">

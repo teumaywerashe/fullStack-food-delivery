@@ -64,6 +64,7 @@ const PlaceOrder = () => {
 
   useEffect(() => {
     if (!token || getTotalAmount() === 0) {
+      alert("Please login and add items to cart first");
       navigate("/cart");
     }
   }, [token]);

@@ -6,9 +6,8 @@ import { StoreContext } from "../../context/StoreContext";
 import { Link, useNavigate } from "react-router-dom";
 function Navbar({ setShowLogin }) {
   const [menu, setMenu] = useState("home");
-  const [searchTerm, setSearchTerm] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const { token, setToken, getTotalCart } = useContext(StoreContext);
+  const { token, setToken,searchTerm,setSearchTerm, getTotalCart } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const logOut = () => {
@@ -63,10 +62,8 @@ function Navbar({ setShowLogin }) {
           <Link to="/cart">
             <img src={assets.basket_icon} alt="" />
           </Link>
-          {getTotalCart() > 0 ? (
+          {getTotalCart() > 0 && (
             <div className="dot">{getTotalCart()}</div>
-          ) : (
-            ""
           )}
         </div>
         {!token ? (
@@ -75,10 +72,11 @@ function Navbar({ setShowLogin }) {
               onClick={() => {
                 setShowLogin(true);
               }}
-              className="navbar-button"
+              className="navbar-signin-button"
             >
               sign in
             </button>
+            
           </div>
         ) : (
           <div className="navbar-profile">

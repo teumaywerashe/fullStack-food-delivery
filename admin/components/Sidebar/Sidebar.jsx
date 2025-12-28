@@ -14,7 +14,7 @@ function Sidebar() {
           <img src={assets.order_icon} alt="" />
           <p>Lists</p>
         </NavLink>
-        <NavLink to='/orders' className="sidebar-option">
+        <NavLink to='/' className="sidebar-option">
           <img src={assets.order_icon} alt="" />
           <p>Orders</p>
         </NavLink>

@@ -26,10 +26,9 @@
 .explore-menu-list {
     display: flex;
     justify-content: flex-start;
-    /* display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); */
     text-align: center;
-    gap: 30px;
+    gap: 10px;
+    padding: 10px 10px;
     margin: 20px auto;
     overflow-x: auto;
     margin-top: 2rem;
@@ -41,13 +40,12 @@
 
 .explore-menu-list-item {
     cursor: pointer;
-    /* text-align: center; */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 16px;
     background: #fff;
     padding: 1rem auto;
     margin: 20px auto;
-    width: 100px;
+    width: 100%;
     height: 200px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
@@ -72,7 +70,7 @@
 
 /* Highlight the selected category */
 
-.explore-menu-list-item img.active {
+.explore-menu-list-item.active {
     border: 3px solid tomato;
     transform: scale(1.05);
 }
