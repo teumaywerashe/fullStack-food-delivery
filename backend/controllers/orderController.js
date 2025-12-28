@@ -66,7 +66,7 @@ export const placeOrder = async(req, res) => {
         await userModel.findByIdAndUpdate(req.userId, { cartData: {} });
 
 
-        const frontend_url = "http://localhost:5173";
+        const frontend_url = "https://fullstack-food-delivery-1.onrender.com";
         const tx_ref = `order-${newOrder._id}`;
 
         const response = await axios.post(

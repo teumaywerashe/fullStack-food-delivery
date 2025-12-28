@@ -1,5 +1,5 @@
 import React from "react";
-import "./Footer.css";
+import "./footer.css";
 // import { assets } from "../../asset/assets";
 // import {assets} from '../../../../admin/src/assets/assets.js'
 

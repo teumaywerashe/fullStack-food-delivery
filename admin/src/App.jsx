@@ -8,7 +8,8 @@ import List from "../pages/List/List";
 import Orders from "../pages/Orders/Orders";
 import Add from "../pages/Add/Add";
 function App() {
-  const url = "http://localhost:3000";
+  const url = import.meta.env.VITE_API_URL;
+  // "http://localhost:3000";
   return (
     <div>
       <ToastContainer />
