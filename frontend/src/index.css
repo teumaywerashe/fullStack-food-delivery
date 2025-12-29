@@ -11,15 +11,30 @@ body {
     min-height: 100vh;
 }
 
+hr {
+    border: none;
+    height: 1px;
+    background-color: #9a9a9a;
+}
+
 a {
-    text-decoration: none;
-    color: inherit;
+    text-decoration-line: none;
 }
 
 .app {
     width: 80%;
     margin: auto;
     position: relative;
+}
+
+.app-content {
+    display: flex;
+}
+
+.flex-col {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
 }
 
 @keyframes fadeIn {

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import "./Navbar.css";
-import { assets } from "../../assets/assets";
 
-import { StoreContext } from "../../context/StoreContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
+import { assets } from "../../assets/assets";
+import { StoreContext } from "../../context/StoreContext";
 function Navbar({ setShowLogin }) {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState("home");
@@ -97,66 +97,68 @@ function Navbar({ setShowLogin }) {
             </ul>
           </div>
         )}
-        <div
-          onClick={() => {
-            setOpen(!open);
-          }}
-          className="small-media-toggle-button"
-        >
-          {open ? <FiX size={30} /> : <FiMenu size={30} />}
-        </div>
-        {open && (
-          <div className="small-media-menu-container">
-            <ul className="small-media-menu">
-              <Link
-                to="/"
-                onClick={() => {
-                  setMenu("home");
-                  setOpen(false);
-                }}
-                className={menu === "home" ? "active" : ""}
-              >
-                home
-              </Link>
-              <a
-                href="#explore-menu"
-                onClick={() => {
-                  setMenu("menu");
-                  setOpen(false);
-                }}
-                className={menu === "menu" ? "active" : ""}
-              >
-                menu
-              </a>
-              <a
-                href="#app-download"
-                onClick={() => {
-                  setMenu("mobile-app"), setOpen(false);
-                }}
-                className={menu === "mobile-app" ? "active" : ""}
-              >
-                mobile-app
-              </a>
-              <a
-                href="#footer"
-                onClick={() => {
-                  setMenu("contact-us"), setOpen(false);
-                }}
-                className={menu === "contact-us" ? "active" : ""}
-              >
-                contact us
-              </a>
-              <button
-                onClick={() => {
-                  setShowLogin(true);
-                  setOpen(!open);
-                }}
-              >
-                get started
-              </button>
-            </ul>
+        <div className="mobile-toggle">
+          <div
+            onClick={() => {
+              setOpen(!open);
+            }}
+            className="small-media-toggle-button"
+          >
+            {open ? <FiX size={30} /> : <FiMenu size={30} />}
           </div>
-        )}
+          {open && (
+            <div className="small-media-menu-container">
+              <ul className="small-media-menu">
+                <Link
+                  to="/"
+                  onClick={() => {
+                    setMenu("home");
+                    setOpen(false);
+                  }}
+                  className={menu === "home" ? "active" : ""}
+                >
+                  home
+                </Link>
+                <a
+                  href="#explore-menu"
+                  onClick={() => {
+                    setMenu("menu");
+                    setOpen(false);
+                  }}
+                  className={menu === "menu" ? "active" : ""}
+                >
+                  menu
+                </a>
+                <a
+                  href="#app-download"
+                  onClick={() => {
+                    setMenu("mobile-app"), setOpen(false);
+                  }}
+                  className={menu === "mobile-app" ? "active" : ""}
+                >
+                  mobile-app
+                </a>
+                <a
+                  href="#footer"
+                  onClick={() => {
+                    setMenu("contact-us"), setOpen(false);
+                  }}
+                  className={menu === "contact-us" ? "active" : ""}
+                >
+                  contact us
+                </a>
+                <button
+                  onClick={() => {
+                    setShowLogin(true);
+                    setOpen(!open);
+                  }}
+                >
+                  get started
+                </button>
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
       {showSearchBar && (
         <div className="searchbar-container">

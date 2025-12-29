@@ -4,7 +4,7 @@ import "./Add.css";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { assets } from "../../src/assets/assets";
+import { assets } from "../../assets/assets";
 function Add({ url }) {
   const [image, setImage] = useState(false);
   const [data, setDate] = useState({

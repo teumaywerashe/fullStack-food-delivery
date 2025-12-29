@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.css";
-import {assets} from "../../src/assets/assets.js";
+import { assets } from "../../assets/assets";
+
 function Navbar() {
   return (
     <div className="navbar">
