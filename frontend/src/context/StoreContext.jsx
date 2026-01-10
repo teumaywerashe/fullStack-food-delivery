@@ -13,9 +13,9 @@ const StoreContextProvider = (props) => {
 
   const navigate = useNavigate();
   const url =
-    // import.meta.env.VITE_API_URL;
+    import.meta.env.VITE_API_URL;
 
-    "http://localhost:4000";
+    // "http://localhost:4000";
 
   const [searchTerm, setSearchTerm] = useState("");
 
