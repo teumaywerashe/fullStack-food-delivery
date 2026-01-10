@@ -50,9 +50,10 @@ const PlaceOrder = () => {
       const response = await axios.post(url + "/api/order/place", orderData, {
         headers: { token },
       });
+      console.log(response.data);
       if (response.data.success) {
         const { checkout_url } = response.data;
-        window.location.href = checkout_url;
+        window.open(checkout_url, "_blank");
       } else {
         alert("Payment initialization failed");
       }
@@ -71,9 +72,6 @@ const PlaceOrder = () => {
     }
   }, [token]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return (
     <form onSubmit={PlaceOrder} type="submit" className="place-order">
       <div className="place-order-left">

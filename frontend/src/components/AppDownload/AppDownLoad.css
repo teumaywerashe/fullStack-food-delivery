@@ -26,6 +26,10 @@
     transform: scale(1.07);
 }
 
+.quickbite {
+    color: tomato;
+}
+
 @media (max-width:648px) {
     .app-download-platform {
         flex-direction: column;

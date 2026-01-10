@@ -2,39 +2,58 @@ import axios from "axios";
 import { createContext, useState } from "react";
 
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
+  const [showLogin, setShowLogin] = useState(false);
   const [food_list, setFood_list] = useState([]);
-  const url = import.meta.env.VITE_API_URL;
 
-  // "http://localhost:4000";
+  const navigate = useNavigate();
+  const url =
+    // import.meta.env.VITE_API_URL;
+
+    "http://localhost:4000";
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const [cartItem, setCartItem] = useState({});
   const [token, setToken] = useState("");
+
+  const logOut = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/");
+  };
   useEffect(() => {
     async function loadData() {
       fetchFoodList();
       if (localStorage.getItem("token")) {
         setToken(localStorage.getItem("token"));
-        loadCartData(localStorage.getItem("token"));
+        // loadCartData(localStorage.getItem("token"));
       }
     }
     loadData();
   }, []);
 
   const fetchFoodList = async () => {
-    const response = await axios.get(url + "/api/food/list");
-    setFood_list(response.data.foods);
-    // console.log(response.data.foods);
+    try {
+      const response = await axios.get(url + "/api/food/list");
+      if (response.data.success) {
+        setFood_list(response.data.foods);
+      } else {
+        toast.error("error", response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     fetchFoodList();
+    // console.log(food_list,"food_list");
   }, []);
 
   const addToCart = async (itemId) => {
@@ -50,12 +69,9 @@ const StoreContextProvider = (props) => {
         { headers: { token } }
       );
     } else {
-      toast.info("Please login to add items to cart", {
-        position: "top-center",
-        color: "blue",
-        bg: "lightgray",
-        height: "50px",
-      });
+      if (window.confirm("to add to cart you are needed to login")) {
+        setShowLogin(true);
+      }
     }
   };
   const removeFromCart = async (itemId) => {
@@ -70,10 +86,17 @@ const StoreContextProvider = (props) => {
   };
 
   const loadCartData = async (token) => {
-    const response = await axios.get(url + "/api/cart/get", {
-      headers: { token },
-    });
-    setCartItem(response.data.cartData);
+    try {
+      const response = await axios.get(url + "/api/cart/get", {
+        headers: { token },
+      });
+      if (response.data.success) {
+        // console.log(response.data.cartData);
+        setCartItem(response.data.cartData);
+      } 
+    } catch (error) {
+      console.log(error);
+    }
   };
   const getTotalCart = () => {
     let totalcart = 0;
@@ -87,7 +110,7 @@ const StoreContextProvider = (props) => {
     for (let item in cartItem) {
       if (cartItem[item] > 0) {
         const filtered = food_list.find((product) => product._id === item);
-        totalAmount = totalAmount + cartItem[item] * filtered.price;
+        totalAmount = totalAmount + Number(cartItem[item] * filtered?.price);
       }
     }
     return totalAmount;
@@ -101,6 +124,10 @@ const StoreContextProvider = (props) => {
     getTotalAmount,
     getTotalCart,
     url,
+    fetchFoodList,
+    showLogin,
+    setShowLogin,
+    logOut,loadCartData,
     searchTerm,
     setSearchTerm,
     token,

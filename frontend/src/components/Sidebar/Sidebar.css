@@ -1,17 +1,20 @@
+/* Sidebar.css */
+
 .sidebar {
     width: 18%;
-    min-height: 100vh;
-    font-size: max(1vw, 10px);
+    min-height: 90vh;
+    margin-right: 10px;
     border: 1.5px solid #a9a9a9;
-    border-top: 0;
+    border-top: none;
+    font-size: max(1vw, 10px);
 }
 
 .sidebar-options {
+    padding-top: 50px;
+    padding-left: 20%;
     display: flex;
     flex-direction: column;
-    padding-left: 20%;
     gap: 20px;
-    padding-top: 50px;
 }
 
 .sidebar-option {
@@ -19,18 +22,47 @@
     align-items: center;
     gap: 12px;
     border: 1px solid #a9a9a9;
+    border-right: 0;
     padding: 8px 10px;
-    border-radius: 3px 0px 0px 3px;
+    border-radius: 3px 0 0 3px;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
+
+.sidebar-option img {
+    width: 25px;
+}
+
+
+/* NavLink automatically adds the 'active' class when the route matches */
 
 .sidebar-option.active {
-    background-color: rgb(237, 176, 176);
-    border-color: rgb(12, 1, 1);
+    background-color: #fff0ed;
+    border-color: tomato;
 }
 
-@media (max-width:900px) {
+.sidebar-option p {
+    display: block;
+}
+
+
+/* Responsive: Hide text on small screens or adjust width */
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 12%;
+    }
     .sidebar-option p {
         display: none;
+    }
+    .sidebar-options {
+        padding-left: 15%;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: 15%;
     }
 }

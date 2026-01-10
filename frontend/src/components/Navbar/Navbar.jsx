@@ -1,37 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
+import Logo from "../logo/Logo";
 function Navbar({ setShowLogin }) {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState("home");
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const { token, setToken, searchTerm, setSearchTerm, getTotalCart } =
+  const { token, searchTerm, setSearchTerm,logOut, getTotalCart } =
     useContext(StoreContext);
   const navigate = useNavigate();
 
-  const logOut = () => {
-    localStorage.removeItem("token");
-    setToken("");
-    navigate("/");
-  };
+ 
+
+ 
   return (
     <div className="navbar">
       <Link to="/">
-        {" "}
-        <img src={assets.logo} className="logo" alt="" />
+      <Logo/>
+        {/* {" "}
+        <img src={assets.logo} className="logo" alt="" /> */}
       </Link>
       <ul className="navbar-menu">
-        <Link
-          to="/"
+        <a
+          href="#home"
           onClick={() => setMenu("home")}
           className={menu === "home" ? "active" : ""}
         >
           home
-        </Link>
+        </a>
         <a
           href="#explore-menu"
           onClick={() => setMenu("menu")}
@@ -147,14 +147,26 @@ function Navbar({ setShowLogin }) {
                 >
                   contact us
                 </a>
-                <button
-                  onClick={() => {
-                    setShowLogin(true);
-                    setOpen(!open);
-                  }}
-                >
-                  get started
-                </button>
+                {token ? (
+                  <button
+                    onClick={() => {
+                      logOut()
+
+                      setOpen(!open);
+                    }}
+                  >
+                    logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setShowLogin(true);
+                      setOpen(!open);
+                    }}
+                  >
+                    get started
+                  </button>
+                )}
               </ul>
             </div>
           )}

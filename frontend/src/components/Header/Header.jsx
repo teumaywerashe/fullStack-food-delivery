@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 function Header() {
   return (
-    <div className="header">
+    <div id="home" className="header">
       <div className="header-content">
         <h2>order your favourite food her</h2>
         <p>

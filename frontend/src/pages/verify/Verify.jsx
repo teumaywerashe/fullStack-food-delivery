@@ -10,7 +10,7 @@ const Verify = () => {
   const navigate = useNavigate();
   const success = searchParams.get("success");
   const orderId = searchParams.get("orderId");
-  console.log(success, orderId);
+ 
   const verifyPayment = async () => {
     const response = await axios.post(url + "/api/order/verify", {
       success,

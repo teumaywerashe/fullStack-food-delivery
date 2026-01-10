@@ -1,45 +1,105 @@
+/* Container styling */
+
+.orders-page {
+    padding: 20px 50px;
+    color: #555;
+}
+
+.order-list {
+    margin-top: 30px;
+}
+
+
+/* Individual Order Card */
+
 .order-item {
     display: grid;
     grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
     align-items: start;
     gap: 30px;
-    border: 1px solid tomato;
+    border: 1px solid #cfcfcf;
     padding: 20px;
-    margin: 30px 0px;
+    margin: 20px 0px;
     font-size: 14px;
-    color: #505050;
+    color: #454545;
+    border-radius: 4px;
 }
+
+
+/* Parcel Icon styling */
+
+.order-item img {
+    width: 50px;
+}
+
+
+/* Text elements inside the card */
 
 .order-item-food,
 .order-item-name {
     font-weight: 600;
 }
 
-.order-item-name {
-    margin-top: 30px;
+.order-item-food {
     margin-bottom: 5px;
 }
 
-.order-item-address {
-    margin-bottom: 10px;
+.order-item-name {
+    margin-top: 10px;
+    color: #000;
 }
+
+.order-item-address {
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.order-item-phone {
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+
+/* Status Dropdown Styling */
 
 .order-item select {
-    background-color: #ffe8e8;
-    border: 1px solid tomato;
-    width: max(10vw, 120px);
+    background-color: #fff4f2;
+    border: 1px solid #ff6347;
+    width: max-content;
     padding: 10px;
     outline: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-@media (max-width:1000px) {
+
+/* Empty State Styling */
+
+.no-orders {
+    text-align: center;
+    padding: 50px;
+    color: #a3a3a3;
+}
+
+
+/* Responsive adjustments for Tablets/Mobile */
+
+@media (max-width: 900px) {
     .order-item {
-        font-size: 12px;
         grid-template-columns: 0.5fr 2fr 1fr;
+        font-size: 12px;
+        gap: 15px;
     }
     .order-item select {
         padding: 5px;
-        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .order-item {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
     }
     .order-item img {
         width: 40px;

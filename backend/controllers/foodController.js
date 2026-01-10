@@ -6,7 +6,11 @@ const addFood = async(req, res) => {
             return res.status(400).json({ success: false, msg: "No file uploaded" });
         }
 
+        // console.log(req.userId);
+
         const food = new foodModel({
+            ownerId: req.userId,
+            quantity: req.body.quantity,
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
@@ -25,9 +29,10 @@ const addFood = async(req, res) => {
 const listFood = async(req, res) => {
     try {
         const foods = await foodModel.find({});
-        res.status(200).json({ succes: true, foods: foods });
+        // console.log(foods);
+        res.status(200).json({ success: true, foods: foods });
     } catch (error) {
-        res.status(400).json({ succes: false, msg: "error" });
+        res.status(400).json({ success: false, msg: "error" });
     }
 };
 

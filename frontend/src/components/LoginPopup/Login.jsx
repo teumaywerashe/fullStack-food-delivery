@@ -4,14 +4,18 @@ import axios from "axios";
 import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { assets } from "../../assets/assets.js";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setShowLogin }) => {
+  const navigate = useNavigate();
   const [currentState, setCurrentState] = useState("Login");
 
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState(null);
   const { url, setToken } = useContext(StoreContext);
+  const [showPassord,setShowPassword]=useState(false);
 
   let [data, setData] = useState({
     name: "",
@@ -28,7 +32,7 @@ const Login = ({ setShowLogin }) => {
 
   const createUser = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     let newUrl = url;
     if (currentState === "Login") {
       newUrl += "/api/user/login";
@@ -38,9 +42,12 @@ const Login = ({ setShowLogin }) => {
     try {
       const response = await axios.post(newUrl, data);
       if (response.data.success) {
+        if(response.data.user.role==="admin"){
+          navigate('/admin')}
+
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
-        console.log(response.data);
+        // console.log(response.data);
         setShowLogin(false);
       } else {
         setError(response.data.msg);
@@ -48,8 +55,8 @@ const Login = ({ setShowLogin }) => {
     } catch (error) {
       console.log(error);
       setError("Server Error");
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,18 +89,29 @@ const Login = ({ setShowLogin }) => {
             placeholder="your email"
             value={data.email}
             required
-          />
-          <input
-            value={data.password}
-            onChange={updateData}
-            type="passsword"
-            name="password"
-            placeholder="your password"
-            required
-          />
+         / >
+          <div className="login-password-container">
+            <input
+              value={data.password}
+              onChange={updateData}
+              type={showPassord?"text":"password"}
+              name="password"
+              placeholder="your password"
+              required
+           />
+            <label onClick={()=>setShowPassword(!showPassord)}>
+              {showPassord ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+            </label>
+          </div>
         </div>
         {error && <p className="login-error-message">{error}</p>}
-        <button>{loading ? "Loading..." : currentState === "Sign Up" ? "sign up" : "Login"}</button>
+        <button>
+          {loading
+            ? "Loading..."
+            : currentState === "Sign Up"
+            ? "sign up"
+            : "Login"}
+        </button>
         <div className="login-popup-condition">
           <input id="checkbox" type="checkbox" required />
           <label htmlFor="checkbox">

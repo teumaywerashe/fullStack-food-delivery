@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
@@ -11,9 +11,10 @@ import MyOrders from "./pages/myOrders/MyOrders";
 // import { ToastContainer } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import AdminHome from "./pages/adminHome/AdminHome";
+import { StoreContext } from "./context/StoreContext";
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false);
+const {showLogin,setShowLogin}=useContext(StoreContext)
 
   const location = useLocation();
 

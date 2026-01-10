@@ -1,28 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const navigate = useNavigate();
-  const { cartItem, food_list, removeFromCart, url, getTotalAmount } =
+  const { cartItem,token, food_list, removeFromCart,loadCartData, url, getTotalAmount } =
     useContext(StoreContext);
+   useEffect(()=>{
+    loadCartData(token)
+    // console.log("cart Item",cartItem)
+   })
   return (
     <div className="cart">
       <div className="cart-items">
         <div className="cart-items-title">
-          <p>items</p>
-          <p>title</p>
-          <p>price</p>
-          <p>quantity</p>
-          <p>total</p>
-          <p>remove</p>
+          <p>Items</p>
+          <p>Title</p>
+          <p>Price</p>
+          <p>Quantity</p>
+          <p>Total</p>
+          <p>Remove</p>
         </div>
         <br />
         <hr />
         {food_list.map((item, index) => {
           if (cartItem[item._id] > 0) {
             return (
-              <div>
+              <div key={index}>
                 <div key={index} className="cart-items-item cart-items-title">
                   <img src={url + "/images/" + item.image} alt="" />
                   <p>{item.name}</p>
@@ -45,7 +49,7 @@ const Cart = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${getTotalAmount()}</p>
+              <p>${getTotalAmount()>0?getTotalAmount():0}</p>
             </div>
             <hr />
             <div className="cart-total-details">

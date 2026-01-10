@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Add.css";
 
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { assets } from "../../assets/assets";
-function Add({ url }) {
+import { StoreContext } from "../../context/StoreContext";
+import { useNavigate } from "react-router-dom";
+function Add() {
+  const navigate = useNavigate();
   const [image, setImage] = useState(false);
+
+  const [added, setAdded] = useState(null);
+
+  const { token, url } = useContext(StoreContext);
   const [data, setDate] = useState({
     name: "",
     price: "",
     category: "Salad",
     description: "",
+    quantity: "",
   });
   const onChangeEventHandler = (e) => {
+    setAdded(null)
     const name = e.target.name;
     const value = e.target.value;
     setDate({ ...data, [name]: value });
@@ -26,23 +35,30 @@ function Add({ url }) {
     formData.append("category", data.category);
     formData.append("price", Number(data.price));
     formData.append("description", data.description);
+    formData.append("quantity", data.quantity);
     formData.append("image", image);
-    const response = await axios.post(`${url}/api/food/add`, formData);
+    const response = await axios.post(`${url}/api/food/add`, formData, {
+      headers: { token },
+    });
     if (response.data.success) {
+      setAdded("Added!");
       setDate({
         name: "",
         price: "",
         category: "Salad",
         description: "",
+        quantity: "",
       });
       setImage(false);
-      toast.success(response.data.msg);
+      // toast.success(response.data.msg);
+      // navigate("/admin/list");
     } else {
-      toast.error(response.data.msg);
+      // toast.error(response.data.msg);
+      setAdded("Error Adding");
     }
   };
   return (
-    <div className="add">
+    <div className="add-page">
       <form className="flex-col" onSubmit={onSubmitEventListener}>
         <div className="flex-col add-img-upload">
           <p>Upload Image</p>
@@ -114,9 +130,26 @@ function Add({ url }) {
               required
             />
           </div>
+          <div className="add-price flex-col">
+            <p>Available product</p>
+            <input
+              onChange={(e) => onChangeEventHandler(e)}
+              value={data.quantity}
+              name="quantity"
+              type="number"
+              placeholder="120"
+              required
+            />
+          </div>
         </div>
-        <button type="submit" className="add-btn">
-          ADD
+        <button
+          onClick={() => {
+            setAdded("Adding...");
+          }}
+          type="submit"
+          className="add-btn"
+        >
+          {added ? added : "ADD"}
         </button>
       </form>
     </div>

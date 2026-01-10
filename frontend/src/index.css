@@ -22,8 +22,9 @@ a {
 }
 
 .app {
-    width: 80%;
+    width: 100%;
     margin: auto;
+    padding: 10px 10px;
     position: relative;
 }
 
@@ -42,6 +43,158 @@ a {
         opacity: 0;
     }
     100% {
+        opacity: 1;
+    }
+}
+
+:root {
+    --primary: #ff5e3a;
+    /* Modern Delivery Orange */
+    --secondary: #2d3436;
+    /* Dark Charcoal */
+    --bg: #f9f9f9;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.logo-wrapper {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+
+/* SVG Styling */
+
+.logo-icon {
+    width: 120px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.cloche-dome {
+    fill: var(--primary);
+}
+
+.cloche-handle,
+.cloche-plate {
+    fill: var(--secondary);
+}
+
+
+/* Steam/Speed Animation */
+
+.steam-container {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.steam-line {
+    width: 4px;
+    height: 15px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+
+/* Hover States */
+
+.logo-wrapper:hover .logo-icon {
+    transform: translateY(-5px) rotate(-5deg);
+}
+
+.logo-wrapper:hover .steam-container {
+    opacity: 1;
+}
+
+.logo-wrapper:hover .steam-line {
+    animation: steamRise 0.6s infinite alternate ease-in-out;
+}
+
+.logo-wrapper:hover .steam-line:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.logo-wrapper:hover .steam-line:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes steamRise {
+    from {
+        height: 5px;
+        transform: translateY(0);
+    }
+    to {
+        height: 18px;
+        transform: translateY(-10px);
+    }
+}
+
+
+/* Text Styling */
+
+.logo-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    margin: 10px 0 0 0;
+    color: var(--secondary);
+    letter-spacing: -1px;
+}
+
+.logo-text span {
+    color: var(--primary);
+}
+
+
+/* Delivery "Launch" Animation */
+
+.delivering {
+    animation: driveOff 1.2s forwards cubic-bezier(0.45, 0, 0.55, 1);
+    pointer-events: none;
+}
+
+@keyframes driveOff {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-15px);
+    }
+    100% {
+        transform: translateX(100vw);
+    }
+}
+
+.status-msg {
+    margin-top: 20px;
+    font-weight: 600;
+    color: #27ae60;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
         opacity: 1;
     }
 }

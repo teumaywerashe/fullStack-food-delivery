@@ -2,22 +2,29 @@ import React from "react";
 import "./Sidebar.css";
 
 import { NavLink } from "react-router-dom";
-import { assets } from "../../assets/assets";
+import { FiBell, FiList, FiPlus, FiShoppingCart } from "react-icons/fi";
 function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar-options">
         <NavLink to='/admin/add' className="sidebar-option">
-          <img src={assets.add_icon} alt="altTxt" />
+         
+          <FiPlus size={20}/>
           <p>Add Items</p>
         </NavLink>
         <NavLink to='/admin/list' className="sidebar-option">
-          <img src={assets.order_icon} alt="altTxt" />
+                <FiList/>
           <p>Lists</p>
         </NavLink>
         <NavLink to='/admin/orders' className="sidebar-option">
-          <img src={assets.order_icon} alt="altTxt" />
+         
+           <FiShoppingCart/>
           <p>Orders</p>
+        </NavLink>
+         <NavLink to='/admin/notification' className="sidebar-option">
+         
+           <FiBell/>
+          <p>notification</p>
         </NavLink>
       </div>
     </div>

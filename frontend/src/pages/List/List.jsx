@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./List.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { StoreContext } from "../../context/StoreContext";
+import { FiEdit, FiTrash } from "react-icons/fi";
 
-function List({url}) {
- 
+function List() {
+  const { url } = useContext(StoreContext);
+
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
@@ -33,13 +36,11 @@ function List({url}) {
     }
   };
   useEffect(() => {
-fetchList();
+    fetchList();
   }, [list]);
 
-  
-
   return (
-    <div className="add list flex-col">
+    <div className="list flex-col">
       <p>All Foods List</p>
       <div className="list-table">
         <div className="list-table-format title">
@@ -47,6 +48,7 @@ fetchList();
           <b>Name</b>
           <b>Category</b>
           <b>Price</b>
+          <b>Available quantity</b>
           <b>Action</b>
         </div>
         {list.length === 0 && <p>No foods available</p>}
@@ -61,12 +63,21 @@ fetchList();
             <p>{item.name}</p>
             <p>{item.category}</p>
             <p>{item.price}</p>
-            <p
-              onClick={() => removeEventListenerHandler(item._id)}
-              className="cursor"
-            >
-              X
-            </p>
+            <p>{item.quantity}</p>
+            <button className="cursor">
+              <FiEdit
+                size={20}
+                onClick={() => {
+                  console.log("edit clicked");
+                }}
+                className="edit"
+              />
+              <FiTrash
+                size={20}
+                onClick={() => removeEventListenerHandler(item._id)}
+                className="delete"
+              />
+            </button>
           </div>
         ))}
       </div>
