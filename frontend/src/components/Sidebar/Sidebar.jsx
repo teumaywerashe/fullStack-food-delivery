@@ -21,11 +21,7 @@ function Sidebar() {
            <FiShoppingCart/>
           <p>Orders</p>
         </NavLink>
-         <NavLink to='/admin/notification' className="sidebar-option">
          
-           <FiBell/>
-          <p>notification</p>
-        </NavLink>
       </div>
     </div>
   );

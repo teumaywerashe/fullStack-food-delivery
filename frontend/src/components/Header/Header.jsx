@@ -11,7 +11,7 @@ function Header() {
           to satisfy your carving and elivate your dining experience ,one
           delicious meal at a time
         </p>
-        <a href="#food-display"><button>View Menu</button></a>
+        <a href="#food-display"><button className="hover:text-red-600 bg-red-500" >View Menu</button></a>
       </div>
     </div>
   );

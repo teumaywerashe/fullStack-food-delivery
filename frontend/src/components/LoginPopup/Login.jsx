@@ -14,7 +14,7 @@ const Login = ({ setShowLogin }) => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState(null);
-  const { url, setToken } = useContext(StoreContext);
+  const { url, setToken, setUserId } = useContext(StoreContext);
   const [showPassord,setShowPassword]=useState(false);
 
   let [data, setData] = useState({
@@ -43,10 +43,13 @@ const Login = ({ setShowLogin }) => {
       const response = await axios.post(newUrl, data);
       if (response.data.success) {
         if(response.data.user.role==="admin"){
-          navigate('/admin')}
+          navigate('/admin')
+        }
 
         setToken(response.data.token);
+        setUserId(response.data.user._id);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.user._id);
         // console.log(response.data);
         setShowLogin(false);
       } else {

@@ -1,36 +1,28 @@
 import React, { useContext } from "react";
 import "./Orders.css";
-import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 
 function Orders() {
-  const [orders, setOrders] = useState([]);
-  const { token ,url} = useContext(StoreContext);
-  const fetchAllOrders = async () => {
-    const response = await axios.get(url + "/api/order/list", {
-      headers: { token },
-    });
-    if (response.data.success) {
-      console.log(response.data.data);
-      setOrders(response.data.data);
-    } else {
-      // toast.error("error");
-    }
-    console.log(response.data);
-  };
 
+  const { orders,isLoading,fetchAllOrders,token, url } = useContext(StoreContext);
 
+  
+ 
 
   const statusHandler = async (e, orderId) => {
     try {
-      const response = await axios.post(url + "/api/order/status", {
-        orderId,
-        status: e.target.value,
-      },{headers:{token}});
-      console.log(response.data);
+      const response = await axios.post(
+        url + "/api/order/status",
+        {
+          orderId,
+          status: e.target.value,
+        },
+        { headers: { token } }
+      );
+      // console.log(response.data);
       if (response.data.success) {
         await fetchAllOrders();
       }
@@ -40,13 +32,16 @@ function Orders() {
   };
   useEffect(() => {
     fetchAllOrders();
-    console.log(orders);
-  });
+  }, []);
   return (
     <div className="orders-page">
       <h3>Order Page</h3>
       <div className="order-list">
-        {orders.length > 0 ? (
+        {isLoading ? (
+          <div className="loading-container">
+            <span className="loading-text">Loading</span>
+          </div>
+        ) : orders.length > 0 ? (
           orders.map((order, index) => (
             <div key={index} className="order-item">
               <img src={assets.parcel_icon} alt="" />

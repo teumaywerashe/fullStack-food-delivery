@@ -46,7 +46,7 @@ const PlaceOrder = () => {
         items: orderItems,
         amount: getTotalAmount() + 2,
       };
-
+      console.log(orderData);
       const response = await axios.post(url + "/api/order/place", orderData, {
         headers: { token },
       });

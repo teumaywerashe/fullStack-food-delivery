@@ -48,7 +48,7 @@
     }
     
     .header-content button:hover {
-        color: white;
+        color: red;
     }
     
     @media(max-width: 1050px) {

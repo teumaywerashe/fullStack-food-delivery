@@ -1,17 +1,21 @@
 import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema({
-    content: {
-        type: String,
-        required: true,
-    },
+  to: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
 
-    isRead: {
-        type: Boolean,
-        default: false,
-    },
+  isRead: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const notificationModel =
-    mongoose.models.notification ||
-    mongoose.model("notification", notificationSchema);
+  mongoose.models.notification ||
+  mongoose.model("notification", notificationSchema);

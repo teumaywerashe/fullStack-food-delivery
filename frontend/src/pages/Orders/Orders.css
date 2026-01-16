@@ -81,6 +81,41 @@
     color: #a3a3a3;
 }
 
+.loading-container {
+    height: 100%;
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-text {
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+}
+
+.loading-text::after {
+    content: "";
+    position: absolute;
+    animation: dots 1.5s steps(3, end) infinite;
+}
+
+@keyframes dots {
+    0% {
+        content: "";
+    }
+    33% {
+        content: ".";
+    }
+    66% {
+        content: "..";
+    }
+    100% {
+        content: "...";
+    }
+}
+
 
 /* Responsive adjustments for Tablets/Mobile */
 

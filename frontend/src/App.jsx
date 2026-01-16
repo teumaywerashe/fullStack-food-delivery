@@ -8,10 +8,11 @@ import Footer from "./components/Footer/Footer";
 import Login from "./components/LoginPopup/Login";
 import Verify from "./pages/verify/Verify";
 import MyOrders from "./pages/myOrders/MyOrders";
-// import { ToastContainer } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import AdminHome from "./pages/adminHome/AdminHome";
+import Notification from "./components/notification/Notification";
 import { StoreContext } from "./context/StoreContext";
+
 
 function App() {
 const {showLogin,setShowLogin}=useContext(StoreContext)
@@ -19,9 +20,11 @@ const {showLogin,setShowLogin}=useContext(StoreContext)
   const location = useLocation();
 
   const isAdminRoute = location.pathname.startsWith("/admin");
+  
   return (
     <>
       <ToastContainer />
+       <Notification />
       {showLogin ? <Login setShowLogin={setShowLogin} /> : <></>}
       <div className="app">
         {!isAdminRoute && <Navbar setShowLogin={setShowLogin} />}
@@ -32,9 +35,10 @@ const {showLogin,setShowLogin}=useContext(StoreContext)
           <Route path="/cart" element={<Cart />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/myOrders" element={<MyOrders />} />
+          <Route path="/notifications" element={<Notification />} />
         </Routes>
       </div>
-      <Footer />
+     {!isAdminRoute && <Footer />}
     </>
   );
 }

@@ -8,23 +8,34 @@ import { toast } from "react-toastify";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
+ const navigate = useNavigate();
+  const url =
+    // import.meta.env.VITE_API_URL;
+
+    "http://localhost:4000"; 
+
+
+
   const [showLogin, setShowLogin] = useState(false);
   const [food_list, setFood_list] = useState([]);
-
-  const navigate = useNavigate();
-  const url =
-    import.meta.env.VITE_API_URL;
-
-    // "http://localhost:4000";
-
+  const [showNotification,setShowNotification]=useState(false)
+  const [notification, setNotification] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
   const [cartItem, setCartItem] = useState({});
-  const [token, setToken] = useState("");
+  const [users,setUsers]=useState([])
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+
 
   const logOut = () => {
     localStorage.removeItem("token");
-    setToken("");
+    setToken(null);
+    localStorage.removeItem("userId");
+    setUserId(null);  
     navigate("/");
   };
   useEffect(() => {
@@ -53,7 +64,6 @@ const StoreContextProvider = (props) => {
 
   useEffect(() => {
     fetchFoodList();
-    // console.log(food_list,"food_list");
   }, []);
 
   const addToCart = async (itemId) => {
@@ -93,7 +103,7 @@ const StoreContextProvider = (props) => {
       if (response.data.success) {
         // console.log(response.data.cartData);
         setCartItem(response.data.cartData);
-      } 
+      }
     } catch (error) {
       console.log(error);
     }
@@ -115,23 +125,120 @@ const StoreContextProvider = (props) => {
     }
     return totalAmount;
   };
+
+  const getNotification = async (id) => {
+    try {
+      const response = await axios.get(`${url}/api/notification/${id}`);
+
+      if (response.data.success) {
+        setNotification(response.data.notification);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateNotification = async (id) => {
+    try {
+      const response = await axios.patch(`${url}/api/notification/${id}`);
+
+      if (response.data.success) {
+        setNotification((prev) => prev - 1);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteNotification = async (id) => {
+    try {
+      const response = await axios.delete(`${url}/api/notification/${id}`);
+      if (response.data.success) {
+        setNotification((prev) => prev - 1);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAllNotification = async () => {
+    try {
+      const response = await axios.get(`${url}/api/notification`);    
+      if (response.data.success) {
+        setNotification(response.data.notification);
+      } 
+    } catch (error) {
+      console.log(error);
+    }}
+
+
+  const getAllUsers= async () => {
+    try {
+      const response = await axios.get(`${url}/api/user`); 
+      if (response.data.success) {
+        return setUsers(response.data.users);
+      }
+    } catch (error) {
+      console.log(error);
+    }}
+
+     const fetchAllOrders = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(url + "/api/order/list", {
+        headers: { token },
+      });
+      if (response.data.success) {
+        console.log(response.data.data);
+        setOrders(response.data.data);
+      }
+    } catch (error) {
+      console.log("something goes wrong", error);
+      toast.error("something goes wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  const markAsRead=async(id)=>{
+    try {
+     await axios.patch(`${url}/api/notification/${id}`,{
+      }); 
+
+    } catch (error) {
+      console.log(error);
+    } }
+
+
   const contextValue = {
     food_list,
     cartItem,
     setCartItem,
-    addToCart,
+    addToCart,getAllUsers,
     removeFromCart,
     getTotalAmount,
     getTotalCart,
-    url,
+    url,users,
+    isLoading,setIsLoading,
     fetchFoodList,
     showLogin,
-    setShowLogin,
-    logOut,loadCartData,
+    setShowLogin,orders,setOrders,
+    logOut,markAsRead,
+    loadCartData,
+    showNotification,
+    setShowNotification,
     searchTerm,
     setSearchTerm,
     token,
     setToken,
+    notification,
+    setNotification,
+    getNotification,
+    updateNotification,
+    deleteNotification,
+    userId,
+    setUserId,fetchAllOrders,getAllNotification
   };
   return (
     <StoreContext.Provider value={contextValue}>
