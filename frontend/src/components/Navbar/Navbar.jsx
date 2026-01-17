@@ -194,7 +194,7 @@ function Navbar({ setShowLogin }) {
                   contact us
                 </a>
                 <div className="flex items-center gap-20 justify-space-between mb-4">
-                  <div className="flex relative navbar-profile">
+                 {token &&   <div className="flex relative navbar-profile">
                     <FiUser size={30} />
                     <ul className="hidden -right-20 absolute navbar-profile-dropdown">
                       <li onClick={() => navigate("/myOrders")}>
@@ -207,7 +207,7 @@ function Navbar({ setShowLogin }) {
                         logout
                       </li>
                     </ul>
-                  </div>
+                  </div>}
                   <FiSearch
                     onClick={() => {
                       setShowSearchBar(!showSearchBar);

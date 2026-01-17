@@ -172,7 +172,7 @@ const StoreContextProvider = (props) => {
     }}
 
 
-  const getAllUsers= async () => {
+ const getAllUsers= async () => {
     try {
       const response = await axios.get(`${url}/api/user`); 
       if (response.data.success) {
@@ -182,7 +182,7 @@ const StoreContextProvider = (props) => {
       console.log(error);
     }}
 
-     const fetchAllOrders = async () => {
+ const fetchAllOrders = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get(url + "/api/order/list", {
@@ -201,7 +201,7 @@ const StoreContextProvider = (props) => {
   };
 
 
-  const markAsRead=async(id)=>{
+ const markAsRead=async(id)=>{
     try {
      await axios.patch(`${url}/api/notification/${id}`,{
       }); 
@@ -211,7 +211,7 @@ const StoreContextProvider = (props) => {
     } }
 
 
-  const contextValue = {
+ const contextValue = {
     food_list,
     cartItem,
     setCartItem,
