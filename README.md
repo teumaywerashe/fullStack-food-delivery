@@ -3,7 +3,9 @@
 A full-stack Food Delivery application where customers can browse menus and place orders without creating an account, while restaurant owners and administrators manage items and orders through role-based access.
 
 ## 🚀 Live Demo
+
 Live Site: <https://fullstack-food-delivery-1.onrender.com>
+
 Backend API / Docs: <https://fullstack-food-delivery.onrender.com>
 
 ## 🛠 Tech Stack
