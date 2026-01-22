@@ -1,165 +1,144 @@
-# Food Delivery — Fullstack Application
+☕ Food Delivery — Menu Management
+A full-stack Food Delivery application where customers can browse menus and place orders without creating an account, while restaurant owners and administrators manage items and orders through role-based access.
 
-This repository contains a full-stack food delivery application with separate `frontend/` and `backend/` folders. This single README documents both sides: how to install, run, and deploy the project, plus environment and API notes.
+🚀 Live Demo
+Live Site: <https://fullstack-food-delivery-1.onrender.com>
+Backend API / Docs: <https://fullstack-food-delivery.onrender.com>
 
----
+🛠 Tech Stack
+Frontend
+- React (Vite)
+- CSS / plain CSS (update if using Tailwind, Bootstrap, etc.)
 
-## Table of Contents
-- Project overview
-- Tech stack
-- Prerequisites
-- Project structure
-- Quick start
-  - Backend
-  - Frontend
-- Environment variables
-- API overview
-- File uploads & storage
-- Development workflow
-- Deployment notes
-- Contributing
-- License & contact
+Backend
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
 
----
+Deployment
+- Render 
 
-## Project overview
-This project is a food delivery web application. The backend serves a REST API (Node.js + Express + MongoDB) and the frontend is a Vite + React app that consumes the API.
+✨ Main Features
+👥 Customers (No Login Required)
+- Select a restaurant / cafe from a list
+- View restaurant menu and product details
+- Browse by category
+- Search items by name
+- Add items to cart and place orders
 
-## Tech stack
-- Backend: Node.js, Express, MongoDB (Mongoose)
-- Frontend: React (Vite)
-- Uploads: local `uploads/` folder (project default) — cloud storage (e.g., Cloudinary) recommended for production
+🛠 Admin (Restaurant Owner)
+- Secure login with email and password
+- If you don’t have an account contact the Super Admin to create one
+- Add, update, and delete menu items
+- Manage orders and view order status
+- Access protected admin routes
 
-## Prerequisites
-- Node.js (16+ recommended)
-- npm or yarn
-- MongoDB (local or Atlas)
+🛡 Super Admin
+- Full system control
+- Create, update, and remove admin (restaurant owner) accounts
+- Manage admin privileges
+- Oversee the entire system
 
-## Project structure (important folders)
-- `backend/` — Node API, models, controllers, routes, `server.js`
-- `frontend/` — React app (Vite)
+🔐 Security
+- Role-based access control (RBAC)
+- Protected admin and super admin routes
+- Public access limited to browsing and ordering
 
-Example route files (backend): `routes/cartRoute.js`, `routes/foodRouter.js`, `routes/notificationRoute.js`, `routes/orderRoute.js`, `routes/userRoute.js`.
-
-## Quick start
-Run backend and frontend in separate terminals.
-
-### Backend (development)
-1. Open a terminal and change to the backend folder:
-
-```bash
-cd backend
+📁 Project Structure
+```
+├── backend
+│   ├── config
+│   ├── controllers
+│   ├── middlewares
+│   ├── models
+│   ├── routes
+│   └── server.js
+├── frontend
+│   ├── public
+│   ├── src
+│   │   ├── components
+│   │   ├── pages
+│   │   └── main.jsx
+│   └── package.json
+└── README.md
 ```
 
-2. Install dependencies:
+⚙️ Environment Variables
+The backend uses environment variables for configuration.
 
-```bash
-npm install
-```
-
-3. Create a `.env` file (copy from `.env.example` if present) and set the values (example below).
-
-4. Start the server:
-
-```bash
-# if project has nodemon/dev script
-npm run dev
-
-# or
-npm start
-# or (explicit)
-node server.js
-```
-
-Server usually runs on `http://localhost:5000` (or as set by your `PORT` env var).
-
-### Frontend (development)
-1. Open a second terminal and change to the frontend folder:
-
-```bash
-cd frontend
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the dev server:
-
-```bash
-npm run dev
-```
-
-The Vite dev server typically runs at `http://localhost:5173` (or as printed by Vite). Ensure `VITE_API_URL` (or equivalent) points to your backend.
-
-## Environment variables (examples)
-
-Backend `.env` sample:
+Create a `backend/.env` file. Example:
 
 ```env
 PORT=5000
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster.example.mongodb.net/dbname
-JWT_SECRET=your_jwt_secret_here
+MONGO_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/<dbname>
+JWT_SECRET=<your_jwt_secret>
 CLIENT_URL=http://localhost:5173
-# Optional: CLOUDINARY_URL or other storage credentials
-# CLOUDINARY_URL=...
 NODE_ENV=development
+# Optional: storage or third-party credentials (Cloudinary, AWS, etc.)
 ```
 
-Frontend `.env` sample (Vite expects `VITE_` prefix):
+Frontend `.env` (Vite) example:
 
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-Place frontend env vars in `frontend/.env` (or `.env.local`) depending on your tooling.
-
-## API overview
-The backend exposes REST endpoints grouped in route files. Example base routes:
-
-- `POST /api/users` — user registration & login routes
-- `GET/POST /api/food` — food items listing, create (admin)
-- `POST /api/cart` — cart operations
-- `POST /api/orders` — create orders, list user orders
-- `GET /api/notifications` — notifications
-
-Authentication is typically implemented with JWT. Protected routes require an `Authorization: Bearer <token>` header.
-
-For exact endpoints and request/response shapes check the route/controller files in `backend/controllers/` and `backend/routes/`.
-
-## File uploads & storage
-- The project includes a `backend/uploads/` folder for temporary file storage. For production use a cloud storage provider such as Cloudinary, Amazon S3, or Azure Blob Storage and update the upload logic and environment variables accordingly.
-
-## Development workflow
-- Run backend and frontend in separate terminals while developing.
-- Use Postman/Insomnia or the browser to test endpoints.
-- If you want to run both with one command, consider adding a root `package.json` with a `concurrently` script (optional):
-
-```json
-{"scripts": {"dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""}}
+▶️ Run Locally
+Backend
+```bash
+cd backend
+npm install
+npm run dev
 ```
 
-## Production & deployment notes
-- Build the frontend: `cd frontend && npm run build` — host the output on static hosting (Netlify, Vercel, S3 + CloudFront, or serve from Express).
-- Configure backend env vars on your hosting platform and point the frontend build to the production API.
-- Use a managed MongoDB (Atlas) in production.
-- Replace local file uploads with cloud storage.
+Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Testing
-- There are no automated tests included by default. Use API testing tools (Postman) and manual UI tests. If you'd like, I can add a simple test suite or CI steps.
+📡 API Overview
+Method  Endpoint                     Description
+GET     /api/food                    Get all food items (public/admin)
+GET     /api/food/:id                Get single food item
+POST    /api/food                    Create food item (admin)
+PUT     /api/food/:id                Update food item (admin)
+DELETE  /api/food/:id                Delete food item (admin)
 
-## Contributing
-- Fork the repo, create a feature branch, and open a PR with a clear description.
-- Keep commits focused and add documentation for any new environment variables or scripts.
+GET     /api/cart                    Get current user cart (or session)
+POST    /api/cart                    Add item to cart
+PUT     /api/cart/:id                Update cart item quantity
+DELETE  /api/cart/:id                Remove item from cart
 
-## License
-This project does not include a license file. Add a `LICENSE` if you intend to specify one (e.g., MIT).
+POST    /api/orders                  Create new order
+GET     /api/orders/user             Get authenticated user orders
+GET     /api/orders/:id              Get order details (admin/user)
 
-## Contact
-If you want changes to this README (different commands, extra examples, or more detail about specific endpoints), tell me what to include and I’ll update it.
+GET     /api/notifications           Get notifications (authenticated)
 
----
+POST    /api/users/register          Register (admin by superadmin / adjust per flow)
+POST    /api/users/login             Login (admin or superadmin)
+GET     /api/users/:id               Get user/admin details
+PUT     /api/users/:id               Update user/admin (protected)
+DELETE  /api/users/:id               Remove admin (superadmin)
 
-Created for this repository — to update, edit `README.md` at the project root.
+- Note: Adjust route paths and request/response payloads to match your implementation in `backend/routes/` and `backend/controllers/`.
+
+🧠 What This Project Demonstrates
+- Full-stack application architecture
+- RESTful API design
+- Role-based authentication & authorization
+- Secure environment variable handling
+
+📌 Future Improvements
+- Order tracking and delivery status
+- Payment gateway integration
+- Dashboard analytics for restaurants
+- Image upload with CDN (S3 / Cloudinary)
+- Email notifications and reporting
+
+👤 Author
+<Your Name>
+
+⭐ If you like this project, feel free to give it a star!
