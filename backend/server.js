@@ -14,24 +14,20 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(
-    cors({
-        origin: [
-            "http://localhost:5173",
-            "http://localhost:5174",
-            /\.onrender\.com$/,
-        ],
-        credentials: true,
-    }),
+  // Allow all origins for API during local development so Swagger UI can call endpoints.
+  // Change this to a stricter policy before production.
+  cors({
+    origin: true,
+    credentials: true,
+  }),
 );
 app.use(express.json());
 
-
-app.get('/', (req, res) => {
-    res.send('server is running successfully')
-})
+app.get("/", (req, res) => {
+  res.send("server is running successfully");
+});
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 
 app.use("/images", express.static("uploads"));
 app.use("/api/food", foodRouter);
@@ -39,10 +35,18 @@ app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/notification", notificationRouter);
-const start = async() => {
+const start = async () => {
+  try {
     await connectDB(process.env.MONGO_URL);
-    app.listen(port, () => {
-        console.log(`Server running on http://localhost:${port}`);
-    });
+    console.log("DB connected");
+  } catch (err) {
+    console.error(
+      "DB connection failed (continuing without DB):",
+      err.message || err,
+    );
+  }
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
 };
 start();
