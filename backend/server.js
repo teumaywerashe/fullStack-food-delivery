@@ -14,32 +14,30 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      /\.onrender\.com$/,
-    ],
-    credentials: true,
-  }),
+    cors({
+        origin: [
+            "http://localhost:5173",
+            "http://localhost:5174",
+            /\.onrender\.com$/,
+        ],
+        credentials: true,
+    }),
 );
 app.use(express.json());
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const start = async () => {
-  await connectDB(process.env.MONGO_URL);
-  app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-  });
-};
-start();
+
 app.use("/images", express.static("uploads"));
 app.use("/api/food", foodRouter);
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/notification", notificationRouter);
-app.get("/", (req, res) => {
-  res.send("Server is running!");
-});
+const start = async() => {
+    await connectDB(process.env.MONGO_URL);
+    app.listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+    });
+};
+start();
