@@ -25,7 +25,12 @@ app.use(
 );
 app.use(express.json());
 
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get('/', (req, res) => {
+    res.send('server is running successfully')
+})
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.use("/images", express.static("uploads"));
