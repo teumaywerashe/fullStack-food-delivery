@@ -4,9 +4,9 @@ A full-stack Food Delivery application where customers can browse menus and plac
 
 ## 🚀 Live Demo
 
-Live Site: <https://fullstack-food-delivery-1.onrender.com>
+Live Site: <https://fullstack-food-delivery-1.onrender.com>[food_delivery_live_demo]
 
-Backend API / Docs: <https://fullstack-food-delivery.onrender.com>
+Backend API / Docs: <https://fullstack-food-delivery.onrender.com/api/docs>[swagger documentation]
 
 ## 🛠 Tech Stack
 ### Frontend
