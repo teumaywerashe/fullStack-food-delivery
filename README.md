@@ -2,13 +2,25 @@
 
 A full-stack Food Delivery application where customers can browse menus and place orders without creating an account, while restaurant owners and administrators manage items and orders through role-based access.
 
-## 🚀 Live Demo
+## 🔗 Live Links
 
-Live Site: <https://fullstack-food-delivery-1.onrender.com>
-
-Backend API / Docs: <https://fullstack-food-delivery.onrender.com>
+<ul>
+  <li>
+    🌐 <b>Live Site:</b>
+    <a href="https://fullstack-food-delivery-1.onrender.com" target="_blank" rel="noopener noreferrer">
+      Food Delivery Live Demo
+    </a>
+  </li>
+  <li>
+    📘 <b>Backend API / Docs:</b>
+    <a href="https://fullstack-food-delivery.onrender.com/api/docs" target="_blank" rel="noopener noreferrer">
+      Swagger Documentation
+    </a>
+  </li>
+</ul>
 
 ## 🛠 Tech Stack
+
 ### Frontend
 
 - React (Vite)
@@ -76,6 +88,7 @@ Backend API / Docs: <https://fullstack-food-delivery.onrender.com>
 ```
 
 ## ⚙️ Environment Variables
+
 The backend uses environment variables for configuration.
 
 ### Create a `backend/.env` file. Example:
@@ -96,6 +109,7 @@ VITE_API_URL=http://localhost:5000/api
 ```
 
 ## ▶️ Run Locally
+
 ### Backend
 
 ```bash
@@ -134,7 +148,6 @@ PUT /api/cart/:id Update cart item quantity
 
 DELETE /api/cart/:id Remove item from cart
 
-
 POST /api/orders Create new order
 
 GET /api/orders/user Get authenticated user orders
@@ -142,7 +155,6 @@ GET /api/orders/user Get authenticated user orders
 GET /api/orders/:id Get order details (admin/user)
 
 GET /api/notifications Get notifications (authenticated)
-
 
 POST /api/users/register Register (admin by superadmin / adjust per flow)
 
@@ -153,7 +165,6 @@ GET /api/users/:id Get user/admin details
 PUT /api/users/:id Update user/admin (protected)
 
 DELETE /api/users/:id Remove admin (superadmin)
-
 
 - Note: Adjust route paths and request/response payloads to match your implementation in `backend/routes/` and `backend/controllers/`.
 
@@ -173,6 +184,7 @@ DELETE /api/users/:id Remove admin (superadmin)
 - Email notifications and reporting
 
 ### 👤 Author
+
 <Teumay Werashe>
 
 ⭐ If you like this project, feel free to give it a star!
