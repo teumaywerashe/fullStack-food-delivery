@@ -2,23 +2,12 @@
 
 A full-stack Food Delivery application where customers can browse menus and place orders without creating an account, while restaurant owners and administrators manage items and orders through role-based access.
 
-## 🔗 Live Links
+## 🚀 Live Demo
 
+**Live Site:** [Food Delivery Live Demo](https://fullstack-food-delivery-1.onrender.com)
 
-<ul>
-  <li>
-    🌐 <b>Live Site:</b>
-    <a href="https://fullstack-food-delivery-1.onrender.com" target="_blank" rel="noopener noreferrer">
-      Food Delivery Live Demo
-    </a>
-  </li>
-  <li>
-    📘 <b>Backend API / Docs:</b>
-    <a href="https://fullstack-food-delivery.onrender.com/api/docs" target="_blank" rel="noopener noreferrer">
-      Swagger Documentation
-    </a>
-  </li>
-</ul>
+**Backend API / Docs:** [Swagger Documentation](https://fullstack-food-delivery.onrender.com/api/docs)
+
 
 ## 🛠 Tech Stack
 
