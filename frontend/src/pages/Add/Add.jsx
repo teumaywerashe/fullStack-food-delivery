@@ -109,14 +109,13 @@ function Add() {
               name="category"
               id=""
             >
-              <option value="Salad">Salad</option>
-              <option value="Rolls">Rolls</option>
-              <option value="Deserts">Deserts</option>
-              <option value="Sandwitch">Sandwitch</option>
-              <option value="Cake">Cake</option>
-              <option value="Pure Veg">Pure Veg</option>
-              <option value="Pasta">Pasta</option>
-              <option value="Noodles">Noodles</option>
+              <option value="Salad">Festing Food(Yetsom)</option>
+              <option value="Rolls">Normal Food(Yefisg)</option>
+              <option value="Deserts">Hot Drink</option>
+              <option value="Sandwitch">Soft Drink</option>
+              <option value="Cake">Alcohol</option>
+              <option value="Pure Veg">Fresh Food</option>
+            
             </select>
           </div>
           <div className="add-price flex-col">
