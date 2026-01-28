@@ -3,9 +3,7 @@
            justify-content: space-between;
            align-items: center;
            padding: 5px 0px;
-           /* padding: 8px 4%; */
            background-color: white;
-           /* border-bottom: 1px solid #a9a9a9; */
            position: sticky;
            top: 0;
            z-index: 10;
@@ -132,11 +130,8 @@
        
        .navbar-search-icon .dot {
            position: absolute;
-           /* min-height: 10px;
-           min-width: 10px; */
            background-color: red;
            border-radius: 100%;
-           /* padding: 5px; */
            top: -8px;
            right: -8px;
        }

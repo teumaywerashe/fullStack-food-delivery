@@ -1,154 +1,98 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
-import { Bell, X } from "lucide-react";
-import { FiUser } from "react-icons/fi";
+import { Bell, X, Inbox, Clock, User, CheckCircle } from "lucide-react";
 
 function Notification() {
-  const {
-    showNotification,
-    notification,
-    userId,
-    getNotification,
-    setShowNotification,
-    markAsRead,
-  } = useContext(StoreContext);
-
+  const { showNotification, notification, userId, getNotification, setShowNotification, markAsRead } = useContext(StoreContext);
   const boxRef = useRef();
   const [filter, setFilter] = useState("all");
 
-  useEffect(() => {
-    if (showNotification) {
-      getNotification(userId);
-    }
-  }, [showNotification]);
-
-  const filteredList =
-    filter === "all"
-      ? notification
-      : notification?.filter((n) => n.isRead === false);
+  useEffect(() => { if (showNotification) getNotification(userId); }, [showNotification, userId]);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (boxRef.current && !boxRef.current.contains(event.target)) {
-        setShowNotification(false);
-      }
-    }
-    if (showNotification)
-      document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const clickOut = (e) => { if (boxRef.current && !boxRef.current.contains(e.target)) setShowNotification(false); };
+    if (showNotification) document.addEventListener("mousedown", clickOut);
+    return () => document.removeEventListener("mousedown", clickOut);
   }, [showNotification, setShowNotification]);
 
-  const handleItemClick = (notifId) => {
-    markAsRead(notifId);
-  };
+  const filtered = filter === "all" ? notification : notification?.filter(n => !n.isRead);
 
   return (
-    <div
-      ref={boxRef}
-      className={`fixed top-0 right-0 h-full bg-white shadow-2xl z-50 transition-transform duration-300 ease-in-out transform
-        ${showNotification ? "translate-x-0" : "translate-x-full"} 
-        w-full sm:w-[400px] md:w-[450px] border-l border-gray-200`}
-      style={{ fontFamily: "'Inter', 'Poppins', sans-serif" }}
-    >
-      {/* Header Section */}
-      <div className="p-6 pb-4">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-            Notifications
-          </h1>
-          <button
-            onClick={() => setShowNotification(false)}
-            className="p-2 hover:bg-gray-100 rounded-full transition-all active:scale-95"
-          >
-            <X size={28} className="text-gray-700 cursor-pointer" />
-          </button>
-        </div>
+    <>
+      <div className={`fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-[200] transition-opacity duration-300 ${showNotification ? "opacity-100" : "opacity-0 pointer-events-none"}`} />
 
-        {/* Filter Tabs - Larger and more defined */}
-        <div className="flex gap-3 mb-2">
-          <button
-            onClick={() => setFilter("all")}
-            className={`px-6 py-2.5 rounded-full text-base font-bold transition-all shadow-sm ${
-              filter === "all"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setFilter("isRead")}
-            className={`px-6 py-2.5 rounded-full text-base font-bold transition-all shadow-sm ${
-              filter === "isRead"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            Unread
-          </button>
-        </div>
-      </div>
-
-      {/* Notifications List */}
-      <div className="overflow-y-auto h-[calc(100%-180px)] px-3">
-        {filteredList &&
-          filteredList.map((notif) => (
-            <div
-              key={notif._id}
-              onClick={() => handleItemClick(notif._id)}
-              className={`flex items-start gap-4 p-4 mb-2 rounded-xl cursor-pointer transition-all duration-200 group relative
-              ${
-                !notif.isRead
-                  ? "bg-blue-50 border border-blue-100 hover:bg-blue-100/50"
-                  : "bg-white border border-transparent hover:bg-gray-50 hover:border-gray-100"
-              }`}
-            >
-              {/* Avatar Container */}
-              <div className="relative flex-shrink-0 mt-1">
-                <div className="w-14 h-14 bg-gray-200 rounded-full flex items-center justify-center border-2 border-white shadow-sm overflow-hidden">
-                  <FiUser size={28} className="text-gray-500" />
-                </div>
-                {!notif.isRead && (
-                  <div className="absolute bottom-0 right-0 bg-blue-600 p-1.5 rounded-full border-2 border-white">
-                    <Bell size={12} className="text-white fill-white" />
-                  </div>
-                )}
-              </div>
-
-              {/* Content - Increased text size */}
-              <div className="flex-1 min-w-0">
-                <p
-                  className={`text-base md:text-lg leading-snug mb-1 ${
-                    !notif.isRead
-                      ? "font-bold text-gray-900"
-                      : "text-gray-600 font-medium"
-                  }`}
-                >
-                  {notif.content}
-                </p>
-                <span
-                  className={`text-sm font-semibold ${
-                    !notif.isRead ? "text-blue-600" : "text-gray-400"
-                  }`}
-                >
-                  {notif.createdAt}
-                </span>
-              </div>
-
-              {/* Unread Indicator */}
-              {!notif.isRead && (
-                <div className="mt-5 w-3.5 h-3.5 bg-blue-600 rounded-full flex-shrink-0 shadow-[0_0_10px_rgba(37,99,235,0.4)]"></div>
-              )}
-            </div>
-          ))}
-
-        {filteredList?.length === 0 && (
-          <div className="text-center mt-20 text-gray-400 font-medium text-lg">
-            No notifications to show.
+      <aside 
+        ref={boxRef}
+        className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-white z-[201] shadow-2xl flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${showNotification ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div className="p-6 border-b border-slate-50 flex items-center justify-between bg-white sticky top-0 z-10">
+          <div>
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight">Activity</h2>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Updates & Alerts</p>
           </div>
-        )}
-      </div>
-    </div>
+          <button onClick={() => setShowNotification(false)} className="p-2 bg-slate-50 text-slate-400 hover:text-slate-900 rounded-full transition-colors">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="p-4 flex gap-2">
+          {['all', 'unread'].map(f => (
+            <button key={f} onClick={() => setFilter(f)} className={`flex-1 py-2 text-sm font-bold rounded-xl capitalize transition-all ${filter === f ? "bg-orange-500 text-white shadow-lg shadow-orange-200" : "bg-slate-50 text-slate-500 hover:bg-slate-100"}`}>
+              {f}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-2">
+          {filtered && filtered.length > 0 ? (
+            filtered.map((notif) => (
+              <div 
+                key={notif._id} 
+                onClick={() => markAsRead(notif._id)}
+                className={`group flex items-start gap-4 p-4 mb-2 rounded-2xl cursor-pointer transition-all ${!notif.isRead ? "bg-orange-50/50 hover:bg-orange-50" : "hover:bg-slate-50"}`}
+              >
+                <div className="relative">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border-2 ${!notif.isRead ? "bg-white border-orange-200 text-orange-500" : "bg-slate-50 border-transparent text-slate-400"}`}>
+                    <User size={24} />
+                  </div>
+                  {!notif.isRead && <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full" />}
+                </div>
+
+                <div className="flex-1 pt-1">
+                  {/* TEXT SPACING: mb-2 provides the gap you asked for */}
+                  <p className={`text-[15px] leading-[1.5] mb-2 ${!notif.isRead ? "font-bold text-slate-900" : "text-slate-600"}`}>
+                    {notif.content}
+                  </p>
+                  
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wide">
+                      <Clock size={12} />
+                      {notif.createdAt}
+                    </span>
+                    {!notif.isRead && (
+                      <span className="bg-orange-100 text-orange-600 text-[9px] font-black px-2 py-0.5 rounded-md uppercase">New Activity</span>
+                    )}
+                  </div>
+                </div>
+
+                {!notif.isRead && <CheckCircle size={16} className="mt-2 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />}
+              </div>
+            ))
+          ) : (
+            <div className="h-full flex flex-col items-center justify-center p-10 opacity-40">
+              <Inbox size={48} className="mb-4" />
+              <p className="font-bold">Nothing here yet</p>
+            </div>
+          )}
+        </div>
+
+        <div className="p-6 bg-slate-50 border-t border-slate-100">
+          <button className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all active:scale-95">
+            Mark All as Read
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
 

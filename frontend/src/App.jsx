@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import AdminHome from "./pages/adminHome/AdminHome";
 import Notification from "./components/notification/Notification";
 import { StoreContext } from "./context/StoreContext";
+import ProfilePage from "./components/ProfilePage";
 
 
 function App() {
@@ -36,6 +37,7 @@ const {showLogin,setShowLogin}=useContext(StoreContext)
           <Route path="/verify" element={<Verify />} />
           <Route path="/myOrders" element={<MyOrders />} />
           <Route path="/notifications" element={<Notification />} />
+          <Route path="/profilePage" element={<ProfilePage />} /> 
         </Routes>
       </div>
      {!isAdminRoute && <Footer />}

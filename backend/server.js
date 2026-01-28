@@ -7,6 +7,7 @@ import "dotenv/config.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import { notificationRouter } from "./routes/notificationRoute.js";
+
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger.js";
 
@@ -14,17 +15,15 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(
-  // Allow all origins for API during local development so Swagger UI can call endpoints.
-  // Change this to a stricter policy before production.
-  cors({
-    origin: true,
-    credentials: true,
-  }),
+    cors({
+        origin: true,
+        credentials: true,
+    }),
 );
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("server is running successfully");
+    res.send("server is running successfully");
 });
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -35,18 +34,18 @@ app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/notification", notificationRouter);
-const start = async () => {
-  try {
-    await connectDB(process.env.MONGO_URL);
-    console.log("DB connected");
-  } catch (err) {
-    console.error(
-      "DB connection failed (continuing without DB):",
-      err.message || err,
-    );
-  }
-  app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-  });
+const start = async() => {
+    try {
+        await connectDB(process.env.MONGO_URL);
+        console.log("DB connected");
+    } catch (err) {
+        console.error(
+            "DB connection failed (continuing without DB):",
+            err.message || err,
+        );
+    }
+    app.listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+    });
 };
 start();

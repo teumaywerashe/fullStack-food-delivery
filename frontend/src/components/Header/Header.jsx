@@ -4,7 +4,7 @@ function Header() {
   return (
     <div id="home" className="header">
       <div className="header-content">
-        <h2>order your favourite food her</h2>
+        <h2>Order your favourite food her</h2>
         <p>
           choose from a diverse menu featuring a delectable array of dishes
           crafited with finest ingredient and culinary expertise.our mission is
