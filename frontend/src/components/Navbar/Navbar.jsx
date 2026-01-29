@@ -195,7 +195,7 @@ function Navbar({ setShowLogin }) {
                 </a>
                 <div className="flex items-center gap-20 justify-space-between mb-4">
                  {token &&   <div className="flex relative navbar-profile">
-                    <FiUser size={30} />
+                    <FiUser onClick={()=>navigate('/profilePage')} size={30} />
                     <ul className="hidden -right-20 absolute navbar-profile-dropdown">
                       <li onClick={() => navigate("/myOrders")}>
                         <FiPackage />
