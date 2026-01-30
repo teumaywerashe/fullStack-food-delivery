@@ -6,7 +6,7 @@ const FoodDisplay = ({ category }) => {
   const { food_list, fetchFoodList, searchTerm } = useContext(StoreContext);
   useEffect(() => {
     fetchFoodList();
-    // console.log("food_list",food_list);
+  
   }, []);
 
   const filtered_items = food_list.filter((food) => {

@@ -1,42 +1,50 @@
-import { useContext, useEffect } from "react";
-import "./Verify.css";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { StoreContext } from "../../context/StoreContext";
-import axios from "axios";
+import React, { useContext, useEffect } from 'react';
+import './Verify.css';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext';
+import axios from 'axios';
 
 const Verify = () => {
-  const { url } = useContext(StoreContext);
-  const [searchParams, setSearchParams] = useSearchParams('');
-  const navigate = useNavigate();
-  const success = searchParams.get("success");
-  const orderId = searchParams.get("orderId");
- 
-  const verifyPayment = async () => {
-    const response = await axios.post(url + "/api/order/verify", {
-      success,
-      orderId,
-    });
-    if (response.data.success) {
-      navigate("/myOrders");
-    } else {
-      navigate("/");
-    }
-  };
+    const [searchParams] = useSearchParams();
+    const ordersId = searchParams.get("ordersId");
+    // Added token from context
+    const { url, token } = useContext(StoreContext); 
+    const navigate = useNavigate();
 
+    const verifyPayment = async () => {
+        try {
+           
+            const response = await axios.get(`${url}/order/verify?ordersId=${ordersId}`, {
+                headers: { token } 
+            });
 
-  const updateSearch=(e)=>{
-    setSearchParams(e.target.value)
-  }
-  useEffect(() => {
-    verifyPayment();
-  });
-  return (
-    <div className="verify">
-      <div className="spinner">
-        <input type="text" value={searchParams} onChange={updateSearch} />
-      </div>
-    </div>
-  );
+            if (response.data.success) {
+                navigate("/myorders");
+            } else {
+                // If payment failed on Chapa's end
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("Verification API Error:", error);
+            navigate("/");
+        }
+    };
+
+    useEffect(() => {
+       
+        if (ordersId && token) {
+            verifyPayment();
+        } else if (!ordersId) {
+            navigate("/");
+        }
+    }, [ordersId, token]); // Re-run if token loads late
+
+    return (
+        <div className='verify'>
+            <div className="spinner"></div>
+            <p>Processing payment confirmation...</p>
+        </div>
+    );
 };
 
 export default Verify;

@@ -8,8 +8,8 @@ const MyOrders = () => {
   const { url, token } = useContext(StoreContext);
 
   const fetchOrders = async () => {
-    const response = await axios.get(url + "/api/order/userOrder", {
-      headers: { token },
+    const response = await axios.get(url + "/order/userOrder", {
+   headers: { Authorization: `Bearer ${token}`},
     });
     setData(response.data.data);
     // console.log(response.data.data);

@@ -8,34 +8,31 @@ import { toast } from "react-toastify";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const url =
-    import.meta.env.VITE_API_URL;
+  //  import.meta.env.VITE_API_URL;
 
-    // "http://localhost:4000"; 
-
-
+  "http://localhost:4000";
 
   const [showLogin, setShowLogin] = useState(false);
   const [food_list, setFood_list] = useState([]);
-  const [showNotification,setShowNotification]=useState(false)
+  const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState([]);
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [cartItem, setCartItem] = useState({});
-  const [users,setUsers]=useState([])
+  const [users, setUsers] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
   const [isLoading, setIsLoading] = useState(false);
 
-
-
+  const [menulistData, setMenuListData] = useState([]);
 
   const logOut = () => {
     localStorage.removeItem("token");
     setToken(null);
     localStorage.removeItem("userId");
-    setUserId(null);  
+    setUserId(null);
     navigate("/");
   };
   useEffect(() => {
@@ -43,7 +40,9 @@ const StoreContextProvider = (props) => {
       fetchFoodList();
       if (localStorage.getItem("token")) {
         setToken(localStorage.getItem("token"));
-        // loadCartData(localStorage.getItem("token"));
+        await loadCartData(localStorage.getItem("token"));
+        await getAllNotification();
+
       }
     }
     loadData();
@@ -51,9 +50,12 @@ const StoreContextProvider = (props) => {
 
   const fetchFoodList = async () => {
     try {
-      const response = await axios.get(url + "/api/food/list");
+      const response = await axios.get(url + "/food/list");
       if (response.data.success) {
         setFood_list(response.data.foods);
+        setMenuListData([
+          ...new Set(response.data.foods.map((food) => food.category)),
+        ]);
       } else {
         toast.error("error", response.data.message);
       }
@@ -74,9 +76,9 @@ const StoreContextProvider = (props) => {
         setCartItem((pre) => ({ ...pre, [itemId]: pre[itemId] + 1 }));
       }
       await axios.post(
-        url + "/api/cart/add",
+        url + "/cart/add",
         { itemId },
-        { headers: { token } }
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } },
       );
     } else {
       if (window.confirm("to add to cart you are needed to login")) {
@@ -88,17 +90,17 @@ const StoreContextProvider = (props) => {
     setCartItem((pre) => ({ ...pre, [itemId]: pre[itemId] - 1 }));
 
     if (token) {
-      await axios.delete(url + "/api/cart/remove", {
+      await axios.delete(url + "/cart/remove", {
         data: { itemId },
-        headers: { token },
+       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
     }
   };
 
   const loadCartData = async (token) => {
     try {
-      const response = await axios.get(url + "/api/cart/get", {
-        headers: { token },
+      const response = await axios.get(url + "/cart/get", {
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
       if (response.data.success) {
         // console.log(response.data.cartData);
@@ -125,68 +127,71 @@ const StoreContextProvider = (props) => {
     }
     return totalAmount;
   };
-
-  const getNotification = async (id) => {
+const getNotification = async (id) => {
+    if (!id) return;
     try {
-      const response = await axios.get(`${url}/api/notification/${id}`);
-
-      if (response.data.success) {
-        setNotification(response.data.notification);
-      }
+        const response = await axios.get(`${url}/notification/${id}`);
+        if (response.data.success) {
+            setNotification(response.data.notification);
+        }
     } catch (error) {
-      console.log(error);
+        console.log("Error fetching notifications:", error);
     }
-  };
+};
 
-  const updateNotification = async (id) => {
+const markAsRead = async (id) => {
     try {
-      const response = await axios.patch(`${url}/api/notification/${id}`);
-
-      if (response.data.success) {
-        setNotification((prev) => prev - 1);
-      }
+        const response = await axios.patch(`${url}/notification/${id}`, {});
+        if (response.data.success) {
+          
+            setNotification((prev) => 
+                prev.map((n) => n._id === id ? { ...n, isRead: true } : n)
+            );
+        }
     } catch (error) {
-      console.log(error);
+        console.log("Error marking as read:", error);
     }
-  };
+};
 
-  const deleteNotification = async (id) => {
+const deleteNotification = async (id) => {
     try {
-      const response = await axios.delete(`${url}/api/notification/${id}`);
-      if (response.data.success) {
-        setNotification((prev) => prev - 1);
-      }
+        const response = await axios.delete(`${url}/notification/${id}`);
+        if (response.data.success) {
+         
+            setNotification((prev) => prev.filter((n) => n._id !== id));
+        }
     } catch (error) {
-      console.log(error);
+        console.log("Error deleting notification:", error);
     }
-  };
+};
 
   const getAllNotification = async () => {
     try {
-      const response = await axios.get(`${url}/api/notification`);    
+      const response = await axios.get(`${url}/notification`);
       if (response.data.success) {
         setNotification(response.data.notification);
-      } 
+      }
     } catch (error) {
       console.log(error);
-    }}
+    }
+  };
 
-
- const getAllUsers= async () => {
+  const getAllUsers = async () => {
     try {
-      const response = await axios.get(`${url}/api/user`); 
+      const response = await axios.get(`${url}/user`);
       if (response.data.success) {
         return setUsers(response.data.users);
       }
     } catch (error) {
       console.log(error);
-    }}
+    }
+  };
 
- const fetchAllOrders = async () => {
+  const fetchAllOrders = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(url + "/api/order/list", {
-        headers: { token },
+      const response = await axios.get(url + "/order/list", {
+     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
       if (response.data.success) {
         console.log(response.data.data);
@@ -201,30 +206,26 @@ const StoreContextProvider = (props) => {
   };
 
 
- const markAsRead=async(id)=>{
-    try {
-     await axios.patch(`${url}/api/notification/${id}`,{
-      }); 
-
-    } catch (error) {
-      console.log(error);
-    } }
-
-
- const contextValue = {
+  const contextValue = {
     food_list,
     cartItem,
     setCartItem,
-    addToCart,getAllUsers,
+    addToCart,
+    getAllUsers,menulistData,
     removeFromCart,
     getTotalAmount,
     getTotalCart,
-    url,users,
-    isLoading,setIsLoading,
+    url,
+    users,
+    isLoading,
+    setIsLoading,
     fetchFoodList,
     showLogin,
-    setShowLogin,orders,setOrders,
-    logOut,markAsRead,
+    setShowLogin,
+    orders,
+    setOrders,
+    logOut,
+    markAsRead,
     loadCartData,
     showNotification,
     setShowNotification,
@@ -235,10 +236,12 @@ const StoreContextProvider = (props) => {
     notification,
     setNotification,
     getNotification,
-    updateNotification,
+   
     deleteNotification,
     userId,
-    setUserId,fetchAllOrders,getAllNotification
+    setUserId,
+    fetchAllOrders,
+    getAllNotification,
   };
   return (
     <StoreContext.Provider value={contextValue}>

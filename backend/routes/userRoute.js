@@ -1,10 +1,32 @@
-import express from "express";
-import { getAllUsers, loginUser, registerUser } from "../controllers/userControler.js";
-// import userModel from '../models/UserModel'
-const userRouter = express.Router();
-// import { registerUser, loginUser } from "../controllers/userControler.js";
+import { registerUser, loginUser, getAllUsers } from "../controllers/userControler.js";
 
-userRouter.post("/register", registerUser);
-userRouter.post("/login", loginUser);
-userRouter.get('/', getAllUsers)
-export default userRouter;
+export const handleUserRoutes = async(req, res) => {
+
+    if (!req.url.startsWith("/user")) return false;
+
+    const urlParts = req.url.split("/").filter(Boolean);
+    const method = req.method;
+
+
+    if (method === "POST" && urlParts[1] === "register") {
+
+        await registerUser(req, res);
+        return true;
+    }
+
+
+    if (method === "POST" && urlParts[1] === "login") {
+
+        await loginUser(req, res);
+        return true;
+    }
+
+
+    if (method === "GET" && urlParts.length === 1) {
+
+        await getAllUsers(req, res);
+        return true;
+    }
+
+    return false;
+};

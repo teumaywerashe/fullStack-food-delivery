@@ -37,7 +37,10 @@ function Navbar({ setShowLogin }) {
     if (token) {
       getNotification(userId);
     }
+    console.log(notification);
   }, [token]);
+
+
 
   const filtedNotifications = notification.filter(
     (not) => not.isRead === false

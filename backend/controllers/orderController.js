@@ -1,114 +1,124 @@
 import orderModel from "../models/orderModel.js";
-import axios from "axios";
 import userModel from "../models/userModel.js";
 import { notificationModel } from "../models/notificationModel.js";
+import axios from "axios";
+import { sendJson } from "../utils/sendJson.js";
+
 const chapaSecretKey = process.env.CHAPA_SECRET_KEY;
+const frontend_url = "http://localhost:4000";
 
-export const placeOrder = async (req, res) => {
-  try {
-    const newOrder = new orderModel({
-      userId: req.userId,
-      items: req.body.items,
-      amount: req.body.amount,
-      address: req.body.address,
-      payment: false,
-    });
-    await newOrder.save();
-    notificationModel.create({
-      to: newOrder.items[0].ownerId || 1,
-      content: `you have recieved a new order from ${newOrder.address.firstName}`,
-    });
-    await userModel.findByIdAndUpdate(req.userId, { cart: {} });
+export const placeOrder = async(req, res) => {
+    try {
+        const { items, firstName, lastName, email, amount, address } = req.body;
 
-    const frontend_url = "https://fullstack-food-delivery-1.onrender.com";
-    const tx_ref = `order-${newOrder._id}`;
+        const newOrder = new orderModel({
+            userId: req.userId,
+            items,
+            amount,
+            address,
+            payment: false,
+        });
+        await newOrder.save();
 
-    const response = await axios.post(
-      "https://api.chapa.co/v1/transaction/initialize",
-      {
-        amount: req.body.amount,
-        currency: "ETB",
-        email: req.body.email,
-        first_name: req.body.firstName,
-        last_name: req.body.lastName,
-        tx_ref,
-        callback_url: `${frontend_url}/verify?ordersId=${newOrder._id}`,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${chapaSecretKey}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+        // Notify admin/owner
+        await notificationModel.create({
+            to: items[0].ownerId || "admin",
+            content: `You have new order from ${firstName} ${lastName}`,
+        });
 
-    res.json({ success: true, checkout_url: response.data.data.checkout_url });
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, msg: "Payment initialization failed" });
-  }
-};
+        await userModel.findByIdAndUpdate(req.userId, { cartData: {} });
+        await notificationModel.create({
+            to: req.userId,
+            content: `hello ${firstName} we have recieved your  order successifully. We will let you know your order's status latter. Thankyou`,
+        });
+        // Chapa Initialization
+        const tx_ref = `order-${newOrder._id}`;
+        const response = await axios.post(
+            "https://api.chapa.co/v1/transaction/initialize", {
+                amount,
+                currency: "ETB",
+                email: email,
+                first_name: firstName,
+                last_name: lastName,
+                tx_ref,
+                callback_url: "https://your-webhook-url.com/api/order/webhook",
 
-export const verifyOrder = async (req, res) => {
-  try {
-    const { ordersId } = req.query;
+            }, {
+                headers: { Authorization: `Bearer ${chapaSecretKey}` }
+            }
+        );
 
-    const order = await orderModel.findById(ordersId);
-    if (!order)
-      return res.status(404).json({ success: false, msg: "Order not found" });
-
-    const response = await axios.get(
-      `https://api.chapa.co/v1/transaction/verify/${`order-${order._id}`}`,
-      {
-        headers: {
-          Authorization: `Bearer ${chapaSecretKey}`,
-        },
-      }
-    );
-
-    if (response.data.data.status === "success") {
-      order.payment = "true";
-      await order.save();
-      res.json({ success: true, msg: "Payment successful" });
-    } else {
-      order.payment = "failed";
-      await order.save();
-      res.json({ success: false, msg: "Payment not successful" });
+        sendJson(res, 200, { success: true, checkout_url: response.data.data.checkout_url });
+    } catch (error) {
+        console.error("Chapa Error:");
+        sendJson(res, 500, { success: false, msg: "Payment failed" });
     }
-  } catch (error) {
-    console.log(error.response?.data || error.message);
-    res.json({ success: false, msg: "Error verifying payment" });
-  }
+};
+export const verifyOrder = async(req, res) => {
+    try {
+
+        const fullUrl = new URL(req.url, `http://${req.headers.host}`);
+        const ordersId = fullUrl.searchParams.get("ordersId");
+
+        if (!ordersId) {
+            return sendJson(res, 400, { success: false, msg: "Order ID missing from URL" });
+        }
+
+        // 1. Check if order exists
+        const order = await orderModel.findById(ordersId);
+        if (!order) {
+            return sendJson(res, 404, { success: false, msg: "Order not found in database" });
+        }
+
+
+        const response = await axios.get(
+            `https://api.chapa.co/v1/transaction/verify/order-${ordersId}`, { headers: { Authorization: `Bearer ${chapaSecretKey}` } }
+        );
+
+        if (response.data.data.status === "success") {
+            order.payment = true;
+            await order.save();
+
+            res.writeHead(302, { Location: `${frontend_url}/myorders` });
+            res.end();
+        } else {
+            res.writeHead(302, { Location: `${frontend_url}/cart` });
+            res.end();
+        }
+    } catch (error) {
+        console.error("Verification Error:", error.response.data || error.message);
+        sendJson(res, 500, { success: false, msg: "Internal Server Error during verification" });
+    }
 };
 
-export const listOrders = async (req, res) => {
-  try {
-    const orders = await orderModel.find({});
-    res.json({ success: true, data: orders });
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, msg: "Error" });
-  }
+
+export const updateStatus = async(req, res) => {
+    try {
+        const order = await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
+        await notificationModel.create({
+            to: order.userId,
+            content: `hello there ${order.address.firstName} your orders status is ${req.body.status} Thankyou`,
+        });
+        sendJson(res, 200, { success: true, msg: "Status Updated" });
+    } catch (error) {
+        sendJson(res, 500, { success: false, msg: "Update failed" });
+    }
 };
 
-export const updateStatus = async (req, res) => {
-  try {
-    await orderModel.findByIdAndUpdate(req.body.orderId, {
-      status: req.body.status,
-    });
-    res.json({ success: true, msg: "Status Updated " });
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, msg: "Error" });
-  }
+export const userOrders = async(req, res) => {
+    try {
+        const orders = await orderModel.find({ userId: req.userId }).sort({ createdAt: -1 });
+        sendJson(res, 200, { success: true, data: orders });
+    } catch (error) {
+        sendJson(res, 500, { success: false, msg: "Error" });
+    }
 };
 
-export const userOrders = async (req, res) => {
-  try {
-    const orders = await orderModel.find({ userId: req.userId });
-    res.json({ success: true, data: orders });
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, msg: "error" });
-  }
+export const listOrders = async(_req, res) => {
+    try {
+        const orders = await orderModel.find({}).sort({ createdAt: -1 });
+        sendJson(res, 200, { success: true, data: orders });
+    } catch (error) {
+        sendJson(res, 500, { success: false, msg: "Error" });
+    }
 };

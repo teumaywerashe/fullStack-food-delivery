@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 const PlaceOrder = () => {
   const { getTotalAmount, token, food_list, cartItem, url } =
     useContext(StoreContext);
-
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -24,39 +23,45 @@ const PlaceOrder = () => {
   });
 
   const onChangeHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const { name, value } = e.target;
     setData((pre) => ({ ...pre, [name]: value }));
   };
 
-  const PlaceOrder = async (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
 
-    let orderItems = [];
-    {
-      food_list.map((item) => {
-        if (cartItem[item._id] > 0) {
-          let itemInfo = item;
-          itemInfo["quantity"] = cartItem[item._id];
-          orderItems.push(itemInfo);
-        }
+    // Create a clean list of items with their cart quantity
+    let orderItems = food_list
+      .filter((item) => cartItem[item._id] > 0)
+      .map((item) => ({
+        ...item,
+        quantity: cartItem[item._id],
+      }));
+
+    let orderData = {
+      address: data,
+      items: orderItems,
+      amount: getTotalAmount() + 2,
+      email: data.email, // Top level for easy backend access
+      firstName: data.firstName,
+      lastName: data.lastName,
+    };
+
+    try {
+      const response = await axios.post(url + "/order/place", orderData, {
+        headers: { token }, // Matches your middleware check for req.headers["token"]
       });
-      let orderData = {
-        address: data,
-        items: orderItems,
-        amount: getTotalAmount() + 2,
-      };
-      console.log(orderData);
-      const response = await axios.post(url + "/api/order/place", orderData, {
-        headers: { token },
-      });
-      console.log(response.data);
+
       if (response.data.success) {
         const { checkout_url } = response.data;
-        window.open(checkout_url, "_blank");
+        // Redirect to Chapa Payment Page
+        window.location.replace(checkout_url);
       } else {
         alert("Payment initialization failed");
       }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while placing the order");
     }
   };
 
@@ -73,7 +78,7 @@ const PlaceOrder = () => {
   }, [token]);
 
   return (
-    <form onSubmit={PlaceOrder} type="submit" className="place-order">
+    <form onSubmit={handlePlaceOrder} type="submit" className="place-order">
       <div className="place-order-left">
         <p className="title">Delvery Information</p>
         <div className="multi-fields">

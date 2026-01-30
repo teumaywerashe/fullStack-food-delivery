@@ -3,12 +3,9 @@ import "./Add.css";
 
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
-import { useNavigate } from "react-router-dom";
 function Add() {
-  const navigate = useNavigate();
   const [image, setImage] = useState(false);
 
   const [added, setAdded] = useState(null);
@@ -17,7 +14,7 @@ function Add() {
   const [data, setDate] = useState({
     name: "",
     price: "",
-    category: "Salad",
+    category: "Festing(Yetsom)",
     description: "",
     quantity: "",
   });
@@ -28,35 +25,42 @@ function Add() {
     setDate({ ...data, [name]: value });
   };
 
-  const onSubmitEventListener = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("category", data.category);
-    formData.append("price", Number(data.price));
-    formData.append("description", data.description);
-    formData.append("quantity", data.quantity);
-    formData.append("image", image);
-    const response = await axios.post(`${url}/api/food/add`, formData, {
-      headers: { token },
+ const onSubmitEventListener = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("category", data.category);
+  formData.append("price", Number(data.price));
+  formData.append("description", data.description);
+  formData.append("quantity", data.quantity);
+  formData.append("image", image);
+
+  try {
+    const response = await axios.post(`${url}/food/add`, formData, {
+      headers: { 
+        token: token,  
+        Authorization: `Bearer ${token}` 
+      },
     });
+
     if (response.data.success) {
       setAdded("Added!");
       setDate({
         name: "",
         price: "",
-        category: "Salad",
+        category: "",
         description: "",
         quantity: "",
       });
       setImage(false);
-      // toast.success(response.data.msg);
-      // navigate("/admin/list");
     } else {
-      // toast.error(response.data.msg);
       setAdded("Error Adding");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setAdded("Server Error");
+  }
+};
   return (
     <div className="add-page">
       <form className="flex-col" onSubmit={onSubmitEventListener}>
@@ -109,12 +113,12 @@ function Add() {
               name="category"
               id=""
             >
-              <option value="Salad">Festing Food(Yetsom)</option>
-              <option value="Rolls">Normal Food(Yefisg)</option>
-              <option value="Deserts">Hot Drink</option>
-              <option value="Sandwitch">Soft Drink</option>
-              <option value="Cake">Alcohol</option>
-              <option value="Pure Veg">Fresh Food</option>
+              <option value="Festing(Yetsom)">Festing(Yetsom)</option>
+              <option value="Non Festin(Yefisg)">Nonfeting(Yefisg)</option>
+              <option value="Hot Drink">Hot Drink</option>
+              <option value="Soft Drink">Soft Drink</option>
+              <option value="Alcoholic Drink">Alcoholic Drink</option>
+              <option value="Fresh Food">Fresh Food</option>
             
             </select>
           </div>

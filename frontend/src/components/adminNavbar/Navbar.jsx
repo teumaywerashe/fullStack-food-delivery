@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import "./Navbar.css";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
@@ -18,8 +17,6 @@ function Navbar() {
 
   useEffect(() => {
     if (userId) {
-      // Fetch notifications for the user
-
       getNotification(userId);
     }
   }, [userId]);
@@ -29,42 +26,49 @@ function Navbar() {
   );
 
   return (
-    <div className="admin-navbar">
+    <div className="flex items-center justify-between px-8 py-4 bg-white shadow-sm border-b border-gray-100">
+      {/* Logo */}
       <img
         onClick={() => navigate("/admin")}
-        className="logo"
+        className="w-32 cursor-pointer object-contain"
         src={assets.logo}
         alt="logo"
       />
 
-      <div className="admin-nav-header">
-        <h1>Admin Page</h1>
+      {/* Header Title */}
+      <div className="hidden md:block">
+        <h1 className="text-xl font-bold text-gray-800 tracking-tight">Admin Page</h1>
       </div>
-      <div className="left-side">
+
+      {/* Actions / Right Side */}
+      <div className="flex items-center gap-6">
+        {/* Notification Bell */}
         <div className="relative">
-          {" "}
           <FiBell
-            onClick={() => {
-              setShowNotification(!showNotification);
-            }}
-            className="cursor-pointer"
-            size={30}
+            onClick={() => setShowNotification(!showNotification)}
+            className="cursor-pointer text-gray-600 hover:text-blue-600 transition-colors"
+            size={24}
           />
           {filterdNotification.length > 0 && (
-            <p className="absolute -right-1 text-center -top-3  min-w-5 px-10 py-10 bg-red-500 rounded-full">
+            <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
               {filterdNotification.length}
-            </p>
+            </span>
           )}
         </div>
-        <div className="admin-profile">
-          <div className="profile-container">
-            <img className="profile" src={assets.profile_image} alt="profile" />
+
+        {/* Profile and Logout */}
+        <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
+          <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200">
+            <img className="w-full h-full object-cover" src={assets.profile_image} alt="profile" />
           </div>
 
-          <div className="logout">
-            <button onClick={logOut}>
-              <FiLogOut />
-              <span>logOut</span>
+          <div className="flex items-center">
+            <button 
+              onClick={logOut}
+              className="flex shrink-0 cursor-pointer items-center gap-2 px-10 py-10 bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-600 rounded-lg transition-all duration-200 group"
+            >
+              <FiLogOut className="group-hover:translate-x-1 transition-transform" />
+              <span className="text-sm font-medium">Log Out</span>
             </button>
           </div>
         </div>

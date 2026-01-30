@@ -1,103 +1,149 @@
-/* AdminPage.css */
+/* Full page background */
 
 .admin-hero-container {
-    width: 100%;
     min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); */
-    padding: 20px;
-    color: #ffffff;
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
 }
+
+
+/* The Card - Centered and Styled */
 
 .admin-glass-card {
-    background: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* This gives the 'glass' feel */
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
-    padding: 40px;
-    max-width: 800px;
+    padding: 3.5rem;
+    /* Remove position: absolute to let Flexbox handle centering */
+    position: relative;
+    max-width: 720px;
     width: 100%;
-    text-align: center;
+    z-index: 10;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #1a1a1a;
+    animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+
+/* Header Styling */
+
 .admin-header h1 {
-    font-size: 2.5rem;
-    margin: 10px 0;
-    background: linear-gradient(to right, #fff, #a2a2a2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0.5rem 0;
+    letter-spacing: -0.5px;
+    color: #111;
 }
+
+.admin-header p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+}
+
+
+/* Badge */
 
 .badge {
     display: inline-block;
-    background: rgba(67, 24, 255, 0.2);
-    color: #70a1ff;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
+    background: #f0f2ff;
+    color: #4318ff;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
 }
+
+
+/* Stats row */
 
 .admin-stats-row {
     display: flex;
     justify-content: space-around;
-    margin: 40px 0;
-    gap: 15px;
+    margin-top: 40px;
+    gap: 20px;
 }
 
+
+/* Individual stat cards */
+
 .mini-stat {
-    display: flex;
-    flex-direction: column;
+    flex: 1;
+    background: #f8f9fa;
+    /* Light grey for card contrast */
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    border: 1px solid #eaeaea;
+}
+
+.mini-stat:hover {
+    transform: translateY(-5px);
 }
 
 .mini-stat .label {
-    color: #94a3b8;
-    font-size: 0.9rem;
+    display: block;
+    font-size: 0.85rem;
+    color: BLACK;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
 }
 
 .mini-stat .value {
-    font-size: 1.5rem;
-    font-weight: bold;
-    /* color: #fff; */
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111111;
 }
 
-.action-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    margin-top: 30px;
-}
+
+/* Action Buttons (if used later) */
 
 .action-btn {
-    padding: 15px;
+    padding: 16px 24px;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
     background: #4318ff;
-    /* color: white; */
+    color: #ffffff;
     font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 4px 14px rgba(67, 24, 255, 0.3);
+    transition: all 0.2s ease;
 }
 
 .action-btn:hover {
     background: #3311cc;
+    box-shadow: 0 6px 20px rgba(67, 24, 255, 0.4);
     transform: translateY(-2px);
 }
 
-.action-btn.secondary {
-    background: rgba(255, 255, 255, 0.1);
-}
 
-.action-btn.secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
+/* Animation */
 
-.admin-footer {
-    margin-top: 40px;
-    font-size: 0.8rem;
-    color: #64748b;
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

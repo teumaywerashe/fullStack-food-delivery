@@ -1,19 +1,25 @@
 import React, { useContext, useEffect } from "react";
 import "./AdminPage.css";
 import { StoreContext } from "../../context/StoreContext";
+import { useNavigate } from "react-router-dom";
 
 function AdminPage() {
- const {getAllUsers,fetchAllOrders,orders,users}=useContext(StoreContext);
 
- useEffect(() => {
-  getAllUsers();
- }, []);
+  const navigate = useNavigate();
+  const { getAllUsers, fetchAllOrders, orders, users } =
+    useContext(StoreContext);
 
- useEffect(() => {
-  fetchAllOrders();
- }, []);
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
- const pendingAlerts = orders.filter((order) => order.status === "food processing");
+  useEffect(() => {
+    fetchAllOrders();
+  }, []);
+
+  const pendingAlerts = orders.filter(
+    (order) => order.status === "pending"
+  );
 
   return (
     <div className="admin-hero-container">
@@ -27,12 +33,12 @@ function AdminPage() {
         <div className="admin-stats-row">
           <div className="mini-stat">
             <span className="label">Active Users</span>
-            <span className="value text-gray-600">{users.length}</span>
+            <span className="value">{users.length}</span>
           </div>
-       
-          <div className="mini-stat">
+
+          <div onClick={() => navigate('/admin/orders')} className="mini-stat">
             <span className="label">Pending Alerts</span>
-            <span className="value text-gray-500">{pendingAlerts.length}</span>
+            <span className="value">{pendingAlerts.length}</span>
           </div>
         </div>
       </div>

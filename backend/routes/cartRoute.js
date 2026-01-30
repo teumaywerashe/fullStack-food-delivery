@@ -1,16 +1,30 @@
-import express from "express";
-import {
-    addToCart,
-    getCart,
-    removeFromCart,
-} from "../controllers/cartControllers.js";
-import authMiddleWare from "../middlewares/auth.js";
-const cartRouter = express.Router();
+import { addToCart, getCart, removeFromCart } from "../controllers/cartControllers.js";
+import authMiddleware from "../middlewares/auth.js"; // pure Node.js auth
 
-cartRouter.post("/add", authMiddleWare, addToCart);
+export const handleCartRoutes = async(req, res) => {
+    // Make sure the route starts with /cart
+    if (!req.url.startsWith("/cart")) return false;
 
-cartRouter.get("/get", authMiddleWare, getCart);
+    // POST /cart/add
+    if (req.url === "/cart/add" && req.method === "POST") {
+        if (!authMiddleware(req, res)) return;
+        await addToCart(req, res);
+        return true;
+    }
 
-cartRouter.delete("/remove", authMiddleWare, removeFromCart);
+    // GET /cart/get
+    if (req.url === "/cart/get" && req.method === "GET") {
+        if (!authMiddleware(req, res)) return;
+        await getCart(req, res);
+        return true;
+    }
 
-export default cartRouter;
+    // DELETE /cart/remove
+    if (req.url === "/cart/remove" && req.method === "DELETE") {
+        if (!authMiddleware(req, res)) return;
+        await removeFromCart(req, res);
+        return true;
+    }
+
+    return false; // route not handled
+};

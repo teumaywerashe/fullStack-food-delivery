@@ -15,12 +15,12 @@ function Orders() {
   const statusHandler = async (e, orderId) => {
     try {
       const response = await axios.post(
-        url + "/api/order/status",
+        url + "/order/status",
         {
           orderId,
           status: e.target.value,
         },
-        { headers: { token } }
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
       );
       // console.log(response.data);
       if (response.data.success) {
@@ -79,7 +79,7 @@ function Orders() {
                 onChange={(e) => statusHandler(e, order._id)}
                 value={order.status}
               >
-                <option value="food processing">food processing</option>
+                <option value="pending">Pending</option>
                 <option
                   value="Out 
               For Delivery"
@@ -88,6 +88,7 @@ function Orders() {
                 </option>
                 <option value="Delivered">Delivered</option>
               </select>
+              <button>delete</button>
             </div>
           ))
         ) : (

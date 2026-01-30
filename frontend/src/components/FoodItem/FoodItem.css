@@ -11,11 +11,6 @@
     transform: scale(1.05);
 }
 
-.food-item-image {
-    width: 100%;
-    border-radius: 15px 15px 0px 0px;
-}
-
 .food-item-info {
     padding: 20px;
 }
@@ -48,8 +43,24 @@
     margin: 10px 0px;
 }
 
+.food-item-image {
+    width: 100%;
+    /* Set a fixed height that looks good for your layout */
+    height: 300px;
+    /* This ensures the image covers the area without distortion */
+    object-fit: cover;
+    border-radius: 15px 15px 0px 0px;
+    display: block;
+}
+
+
+/* Optional: Ensure the container doesn't overflow if images are weirdly sized */
+
 .food-item-image-container {
     position: relative;
+    overflow: hidden;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .food-item-image-container .add {

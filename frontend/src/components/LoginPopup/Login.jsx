@@ -8,11 +8,11 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const Login = ({ setShowLogin }) => {
+
+
   const navigate = useNavigate();
   const [currentState, setCurrentState] = useState("Login");
-
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState(null);
   const { url, setToken, setUserId } = useContext(StoreContext);
   const [showPassord,setShowPassword]=useState(false);
@@ -35,9 +35,9 @@ const Login = ({ setShowLogin }) => {
     setLoading(true);
     let newUrl = url;
     if (currentState === "Login") {
-      newUrl += "/api/user/login";
+      newUrl += "/user/login";
     } else {
-      newUrl += "/api/user/register";
+      newUrl += "/user/register";
     }
     try {
       const response = await axios.post(newUrl, data);
@@ -134,7 +134,7 @@ const Login = ({ setShowLogin }) => {
         )}
       </form>
     </div>
-  );
+  )
 };
 
 export default Login;

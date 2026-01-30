@@ -1,14 +1,27 @@
 import userModel from "../models/userModel.js";
+import { parseBody } from "../utils/parseBody.js";
 
+/**
+ * ADD TO CART
+ */
 const addToCart = async(req, res) => {
     try {
-        const userData = await userModel.findOne({ _id: req.userId });
+
+        const userId = req.userId;
+
+        const userData = await userModel.findOne({ _id: userId });
 
         if (!userData) {
-            return res.json({ success: false, msg: "User not found" });
+            res.writeHead(404, { "Content-Type": "application/json" });
+            return res.end(
+                JSON.stringify({
+                    success: false,
+                    msg: "User not found",
+                }),
+            );
         }
 
-        const cartData = await userData.cart;
+        const cartData = userData.cart || {};
 
         if (!cartData[req.body.itemId]) {
             cartData[req.body.itemId] = 1;
@@ -16,43 +29,92 @@ const addToCart = async(req, res) => {
             cartData[req.body.itemId] += 1;
         }
 
-        await userModel.findByIdAndUpdate(req.userId, { cart: cartData });
+        await userModel.findByIdAndUpdate(userId, { cart: cartData });
 
-        res.json({ success: true, msg: "Added to cart" });
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(
+            JSON.stringify({
+                success: true,
+                msg: "Added to cart",
+            }),
+        );
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, msg: "Server error" });
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(
+            JSON.stringify({
+                success: false,
+                msg: "Server error",
+            }),
+        );
     }
 };
 
+
 const removeFromCart = async(req, res) => {
     try {
-        const userData = await userModel.findById(req.userId);
+
+        const userId = req.userId;
+
+        const userData = await userModel.findById(userId);
         let cartData = userData.cart || {};
+
         if (cartData[req.body.itemId] > 0) {
             cartData[req.body.itemId] -= 1;
         }
+
+        // Remove items with 0 quantity
         for (let key in cartData) {
             if (cartData[key] === 0) {
                 delete cartData[key];
             }
         }
-        await userModel.findByIdAndUpdate(req.userId, { cart: cartData });
 
-        res.json({ success: true, msg: "removed from the cart" });
+        await userModel.findByIdAndUpdate(userId, { cart: cartData });
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(
+            JSON.stringify({
+                success: true,
+                msg: "Removed from the cart",
+            }),
+        );
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, msg: "error" });
+        console.error(error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(
+            JSON.stringify({
+                success: false,
+                msg: "Error",
+            }),
+        );
     }
 };
+
+
 const getCart = async(req, res) => {
     try {
-        const userData = await userModel.findById(req.userId);
-        const cartData = userData.cart;
-        res.json({ success: true, cartData });
+        const userId = req.userId;
+
+        const userData = await userModel.findById(userId);
+        const cartData = userData.cart || {};
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(
+            JSON.stringify({
+                success: true,
+                cartData,
+            }),
+        );
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, msg: "error" });
+        console.error(error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(
+            JSON.stringify({
+                success: false,
+                msg: "Error",
+            }),
+        );
     }
 };
 
