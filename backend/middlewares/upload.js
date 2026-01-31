@@ -27,7 +27,7 @@ const uploadSingle = (req) => {
                     if (!fileData) continue;
 
                     fs.writeFileSync(path.join("uploads", filename), fileData, "binary");
-                    req.file = { filename }; // 👈 HERE
+                    req.file = { filename };
                 }
             }
             resolve();

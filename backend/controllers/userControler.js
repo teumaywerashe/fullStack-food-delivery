@@ -4,16 +4,11 @@ import validator from "validator";
 import userModel from "../models/userModel.js";
 import { sendJson } from "../utils/sendJson.js";
 
-/**
- * Create JWT Token
- */
+
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "3d" });
 };
 
-/**
- * GET ALL USERS (role: user)
- */
 export const getAllUsers = async(_req, res) => {
     try {
         const users = await userModel.find({ role: "user" }).select("-password");
@@ -29,9 +24,7 @@ export const getAllUsers = async(_req, res) => {
     }
 };
 
-/**
- * REGISTER USER
- */
+
 export const registerUser = async(req, res) => {
     try {
 
@@ -85,9 +78,6 @@ export const registerUser = async(req, res) => {
     }
 };
 
-/**
- * LOGIN USER
- */
 export const loginUser = async(req, res) => {
     try {
 

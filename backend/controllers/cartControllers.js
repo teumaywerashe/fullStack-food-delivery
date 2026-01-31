@@ -1,9 +1,6 @@
 import userModel from "../models/userModel.js";
-import { parseBody } from "../utils/parseBody.js";
 
-/**
- * ADD TO CART
- */
+
 const addToCart = async(req, res) => {
     try {
 

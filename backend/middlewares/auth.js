@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const authMiddleware = (req, res) => {
     try {
-        // Optional chaining (?.) prevents crashing if authorization is undefined
+
         const token = req.headers["token"] || req.headers["authorization"].split(" ")[1];
 
         if (!token) {

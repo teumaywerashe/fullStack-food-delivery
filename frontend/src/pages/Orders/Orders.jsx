@@ -88,7 +88,6 @@ function Orders() {
                 </option>
                 <option value="Delivered">Delivered</option>
               </select>
-              <button>delete</button>
             </div>
           ))
         ) : (

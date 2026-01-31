@@ -20,13 +20,14 @@ export const placeOrder = async(req, res) => {
         });
         await newOrder.save();
 
-        // Notify admin/owner
+
         await notificationModel.create({
             to: items[0].ownerId || "admin",
             content: `You have new order from ${firstName} ${lastName}`,
         });
 
         await userModel.findByIdAndUpdate(req.userId, { cartData: {} });
+
         await notificationModel.create({
             to: req.userId,
             content: `hello ${firstName} we have recieved your  order successifully. We will let you know your order's status latter. Thankyou`,

@@ -26,7 +26,7 @@ function Navbar() {
   );
 
   return (
-    <div className="flex items-center justify-between px-8 py-4 bg-white shadow-sm border-b border-gray-100">
+    <div className="flex items-center  sticky justify-between px-8 py-4 bg-white shadow-sm border-b border-gray-100">
       {/* Logo */}
       <img
         onClick={() => navigate("/admin")}

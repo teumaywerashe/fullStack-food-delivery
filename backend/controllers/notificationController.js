@@ -36,7 +36,7 @@ export const addNotification = async(req, res) => {
 export const getNotification = async(req, res) => {
     try {
         const id = req.params.id;
-        console.log(id);
+
         if (!id) {
             return sendJson(res, 400, { success: false, msg: "User ID required" });
         }

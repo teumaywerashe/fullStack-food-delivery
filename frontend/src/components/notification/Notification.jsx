@@ -80,7 +80,7 @@ function Notification() {
               <div
                 key={notif._id}
                 onClick={() => !notif.isRead && markAsRead(notif._id)} // Only trigger if unread
-                className={`group flex items-start gap-4 p-4 mb-2 rounded-2xl cursor-pointer transition-all ${
+                className={`group flex items-start gap-4 p-4 mb-4 rounded-2xl cursor-pointer transition-all ${
                   !notif.isRead
                     ? "bg-orange-50/50 hover:bg-orange-50 border-l-4 border-orange-500"
                     : "hover:bg-slate-50"

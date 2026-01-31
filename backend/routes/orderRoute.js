@@ -14,7 +14,6 @@ export const handleOrderRoutes = async(req, res) => {
     }
 
     if (method === "GET" && url.startsWith("/order/verify")) {
-        // If you want to require login to verify:
         if (!authMiddleware(req, res)) return true;
 
         await verifyOrder(req, res);

@@ -4,22 +4,22 @@ import authMiddleware from "../middlewares/auth.js";
 export const handleFoodRoutes = async(req, res) => {
     if (!req.url.startsWith("/food")) return false;
 
-    // ADD FOOD
+
     if (req.url === "/food/add" && req.method === "POST") {
         if (!authMiddleware(req, res)) return true;
 
-        // Go straight to addFood; it handles formidable parsing internally
+
         await addFood(req, res);
         return true;
     }
 
-    // LIST FOOD
+
     if (req.url === "/food/list" && req.method === "GET") {
         await listFood(req, res);
         return true;
     }
 
-    // REMOVE FOOD
+
     if (req.url.startsWith("/food/remove/") && req.method === "DELETE") {
         await removeFood(req, res);
         return true;

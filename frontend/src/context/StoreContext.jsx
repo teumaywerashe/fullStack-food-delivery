@@ -128,9 +128,10 @@ const StoreContextProvider = (props) => {
     return totalAmount;
   };
 const getNotification = async (id) => {
-    if (!id) return;
+    if (!id) id===userId;
     try {
         const response = await axios.get(`${url}/notification/${id}`);
+     
         if (response.data.success) {
             setNotification(response.data.notification);
         }

@@ -30,7 +30,7 @@ const PlaceOrder = () => {
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
 
-    // Create a clean list of items with their cart quantity
+    
     let orderItems = food_list
       .filter((item) => cartItem[item._id] > 0)
       .map((item) => ({
@@ -49,13 +49,13 @@ const PlaceOrder = () => {
 
     try {
       const response = await axios.post(url + "/order/place", orderData, {
-        headers: { token }, // Matches your middleware check for req.headers["token"]
+        headers: { token }, 
       });
 
       if (response.data.success) {
         const { checkout_url } = response.data;
-        // Redirect to Chapa Payment Page
-        window.location.replace(checkout_url);
+      
+        window.open(checkout_url, "_blank");
       } else {
         alert("Payment initialization failed");
       }

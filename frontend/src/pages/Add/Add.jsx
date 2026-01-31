@@ -114,7 +114,7 @@ function Add() {
               id=""
             >
               <option value="Festing(Yetsom)">Festing(Yetsom)</option>
-              <option value="Non Festin(Yefisg)">Nonfeting(Yefisg)</option>
+              <option value="Non Festin(Yefisg)">Nonfesting(Yefisg)</option>
               <option value="Hot Drink">Hot Drink</option>
               <option value="Soft Drink">Soft Drink</option>
               <option value="Alcoholic Drink">Alcoholic Drink</option>
