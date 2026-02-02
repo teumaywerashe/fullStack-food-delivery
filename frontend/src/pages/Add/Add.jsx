@@ -3,12 +3,10 @@ import "./Add.css";
 
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
-import { useNavigate } from "react-router-dom";
+
 function Add() {
-  const navigate = useNavigate();
   const [image, setImage] = useState(false);
 
   const [added, setAdded] = useState(null);
@@ -22,7 +20,7 @@ function Add() {
     quantity: "",
   });
   const onChangeEventHandler = (e) => {
-    setAdded(null)
+    setAdded(null);
     const name = e.target.name;
     const value = e.target.value;
     setDate({ ...data, [name]: value });
@@ -115,7 +113,6 @@ function Add() {
               <option value="Sandwitch">Soft Drink</option>
               <option value="Cake">Alcohol</option>
               <option value="Pure Veg">Fresh Food</option>
-            
             </select>
           </div>
           <div className="add-price flex-col">
