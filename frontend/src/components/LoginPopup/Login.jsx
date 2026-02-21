@@ -116,7 +116,7 @@ const Login = ({ setShowLogin }) => {
             : "Login"}
         </button>
         <div className="login-popup-condition">
-          <input id="checkbox" type="checkbox" required />
+          <input id="checkbox" type="checkbox"  />
           <label htmlFor="checkbox">
             by continuing , i agree to the term of use & privacy policy
           </label>
