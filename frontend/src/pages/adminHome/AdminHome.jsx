@@ -13,7 +13,7 @@ import AdminPage from "../adminPage/AdminPage";
 function AdminHome() {
   useEffect(() => {
     document.title = "Admin Panel - Food Delivery App";
-  
+    
   }, []);
   return (
     <div>

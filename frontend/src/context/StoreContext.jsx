@@ -1,11 +1,12 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { useState } from "react";
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { StoreContext } from "./ContextProvider";
 
-export const StoreContext = createContext(null);
+
 
 const StoreContextProvider = (props) => {
  const navigate = useNavigate();
@@ -29,7 +30,17 @@ const StoreContextProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-
+  useEffect(() => {
+    async function loadData() {
+      fetchFoodList();
+      if (localStorage.getItem("token")) {
+        
+        setToken(localStorage.getItem("token"));
+      
+      }
+    }
+    loadData();
+  }, []);
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -38,16 +49,7 @@ const StoreContextProvider = (props) => {
     setUserId(null);  
     navigate("/");
   };
-  useEffect(() => {
-    async function loadData() {
-      fetchFoodList();
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-        // loadCartData(localStorage.getItem("token"));
-      }
-    }
-    loadData();
-  }, []);
+  
 
   const fetchFoodList = async () => {
     try {
@@ -169,7 +171,7 @@ const StoreContextProvider = (props) => {
       } 
     } catch (error) {
       console.log(error);
-    }}
+  }}
 
 
  const getAllUsers= async () => {
@@ -180,7 +182,7 @@ const StoreContextProvider = (props) => {
       }
     } catch (error) {
       console.log(error);
-    }}
+  }}
 
  const fetchAllOrders = async () => {
     try {
@@ -208,7 +210,7 @@ const StoreContextProvider = (props) => {
 
     } catch (error) {
       console.log(error);
-    } }
+  }}
 
 
  const contextValue = {

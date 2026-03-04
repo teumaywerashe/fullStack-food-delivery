@@ -26,7 +26,7 @@ const Footer = () => {
               <img src={assets.linkedin_icon} alt="linkedin" />
             </div>
             <div className="icon-circle">
-              <img src={assets.twitter_icon} alt="twitter" />
+              <img src={assets.x_icon} alt="twitter" />
             </div>
           </div>
         </div>
