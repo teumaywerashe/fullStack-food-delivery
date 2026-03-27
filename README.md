@@ -14,7 +14,7 @@ A full-stack Food Delivery application where customers can browse menus and plac
 ### Frontend
 
 - React (Vite)
-- CSS / plain CSS (update if using Tailwind, Bootstrap, etc.)
+- CSS / plain CSS 
 
 ### Backend
 
@@ -44,7 +44,7 @@ A full-stack Food Delivery application where customers can browse menus and plac
 - Manage orders and view order status
 - Access protected admin routes
 
-### 🛡 Super Admin
+### 🛡 SuperAdmin
 
 - Full system control
 - Create, update, and remove admin (restaurant owner) accounts
@@ -85,7 +85,7 @@ The backend uses environment variables for configuration.
 
 ```env
 PORT=5000
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/<dbname>
+MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/<dbname>
 JWT_SECRET=<your_jwt_secret>
 CLIENT_URL=http://localhost:5173
 NODE_ENV=development
