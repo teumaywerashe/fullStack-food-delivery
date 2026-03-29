@@ -27,6 +27,8 @@ const StoreContextProvider = (props) => {
   const [users,setUsers]=useState([])
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
+  const [userName, setUserName] = useState(localStorage.getItem("userName") || null);
+  const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail") || null);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -46,7 +48,11 @@ const StoreContextProvider = (props) => {
     localStorage.removeItem("token");
     setToken(null);
     localStorage.removeItem("userId");
-    setUserId(null);  
+    setUserId(null);
+    localStorage.removeItem("userName");
+    setUserName(null);
+    localStorage.removeItem("userEmail");
+    setUserEmail(null);
     navigate("/");
   };
   
@@ -217,30 +223,30 @@ const StoreContextProvider = (props) => {
     food_list,
     cartItem,
     setCartItem,
-    addToCart,getAllUsers,
+    addToCart, getAllUsers,
     removeFromCart,
     getTotalAmount,
     getTotalCart,
-    url,users,
-    isLoading,setIsLoading,
+    url, users,
+    isLoading, setIsLoading,
     fetchFoodList,
     showLogin,
-    setShowLogin,orders,setOrders,
-    logOut,markAsRead,
+    setShowLogin, orders, setOrders,
+    logOut, markAsRead,
     loadCartData,
     showNotification,
     setShowNotification,
     searchTerm,
     setSearchTerm,
-    token,
-    setToken,
-    notification,
-    setNotification,
+    token, setToken,
+    notification, setNotification,
     getNotification,
     updateNotification,
     deleteNotification,
-    userId,
-    setUserId,fetchAllOrders,getAllNotification
+    userId, setUserId,
+    userName, setUserName,
+    userEmail, setUserEmail,
+    fetchAllOrders, getAllNotification
   };
   return (
     <StoreContext.Provider value={contextValue}>

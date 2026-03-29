@@ -1,0 +1,6 @@
+.menu-section {
+    /* sticky works relative to the nearest scrolling ancestor.
+       This wrapper contains both the filter bar and the food grid,
+       so the bar sticks while the grid is in view and releases after. */
+    position: relative;
+}

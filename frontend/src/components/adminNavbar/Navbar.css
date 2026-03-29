@@ -2,99 +2,126 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 4%;
-    background-color: white;
-    border-bottom: 1px solid #a9a9a9;
+    padding: 0 32px;
+    height: 60px;
+    background-color: #0f172a;
+    border-bottom: 1px solid #1e293b;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
 }
 
-.logo {
-    width: max(10%, 80px);
-    cursor: pointer;
-}
-
-.admin-profile {
-    position: relative;
-    padding: 5px 0;
+.admin-nav-header h1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .left-side {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     align-items: center;
 }
 
-.profile-container {
-    height: 30px;
+/* Bell */
+.admin-bell {
+    position: relative;
     cursor: pointer;
-    background-color: white;
-    border-radius: 50%;
-    border: 1px solid black;
-}
-
-.profile {
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
-    padding: 1px;
-    object-fit: cover;
-    cursor: pointer;
-    border: 1.5px solid #ececec;
-    transition: 0.3s;
-}
-
-.profile:hover {
-    border-color: tomato;
-}
-
-.logout {
-    display: none;
-    position: absolute;
-    top: 20px;
-    right: 10;
-    width: 100px;
-    height: 30px;
-}
-
-.admin-profile:hover .logout {
+    color: #94a3b8;
     display: flex;
     align-items: center;
+    transition: color 0.2s;
 }
 
-.logout button {
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
-    background-color: white;
-    flex: 1;
-    color: red;
-    border: 1px solid red;
+.admin-bell:hover { color: white; }
+
+.admin-bell-dot {
+    position: absolute;
+    background: #e8472a;
+    color: white;
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 10px;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    padding: 0 3px;
+}
+
+/* Profile / logout */
+.admin-profile {
+    position: relative;
+}
+
+.admin-profile-btn {
     display: flex;
-    padding: 5px 10px;
+    align-items: center;
+    gap: 8px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
 }
 
-.logout button:hover {
+.admin-profile-btn:hover { background: #334155; }
+
+.admin-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e8472a;
     color: white;
-    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
+.admin-logout-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    min-width: 160px;
+    overflow: hidden;
+    z-index: 200;
+    animation: fadeIn 0.15s ease;
+}
 
-/* 
-.logout button:hover {
-    color: black;
-} */
+.admin-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    color: #f87171;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.admin-logout-btn:hover { background: #2d3f55; }
 
 @media (max-width: 600px) {
-    .navbar {
-        padding: 10px 15px;
-    }
-    .admin-navbar h1 {
-        display: none;
-    }
+    .admin-nav-header { display: none; }
+    .admin-navbar { padding: 0 16px; }
 }

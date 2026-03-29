@@ -1,38 +1,36 @@
-import React from "react";
+import { useContext } from "react";
 import "./ExploreMenu.css";
-import { menu_list } from "../../assets/assets.js";
+import { StoreContext } from "../../context/ContextProvider";
 
 const ExploreMenu = ({ category, setcategory }) => {
+  const { food_list } = useContext(StoreContext);
+
+  // Derive unique categories from actual food data
+  const categories = [...new Set(food_list.map((item) => item.category))].filter(Boolean);
+
   return (
     <div id="explore-menu" className="explor-menu">
       <h1>Explore our Menu</h1>
       <p className="explor-menu-text">
-        featuring a delectable array of dishes crafited with finest ingredient
-        and culinary expertise.our mission is to satisfy your carving and
-        elivate your dining experience ,one delicious meal at a time
+        Choose from a wide variety of dishes crafted with the finest ingredients.
+        Filter by category to find exactly what you're craving.
       </p>
       <div className="explore-menu-list">
-        {menu_list.map((item, index) => {
-          return (
-            <div
-              onClick={() => {
-                setcategory((prev) =>
-                  item.menu_name === prev ? "All" : item.menu_name
-                );
-              
-              }}
-              className={`explore-menu-list-item ${item.menu_name === category ? "active" : ""}`}
-              key={index}
-            >
-              <img
-                className={item.menu_name === category ? "active" : ""}
-                src={item.menu_image}
-                alt="image"
-              />
-              <p>{item.menu_name}</p>
-            </div>
-          );
-        })}
+        <button
+          onClick={() => setcategory("All")}
+          className={`explore-menu-btn ${category === "All" ? "active" : ""}`}
+        >
+          All
+        </button>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setcategory((prev) => (prev === cat ? "All" : cat))}
+            className={`explore-menu-btn ${category === cat ? "active" : ""}`}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
       <hr />
     </div>

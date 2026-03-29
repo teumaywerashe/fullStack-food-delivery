@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./List.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../../context/ContextProvider";
 import { FiEdit, FiTrash } from "react-icons/fi";
 
 function List() {

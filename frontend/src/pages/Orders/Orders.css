@@ -1,97 +1,108 @@
-/* Container styling */
-
-.orders-page {
-    padding: 20px 50px;
-    color: #555;
+.orders-page h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 20px;
 }
 
 .order-list {
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
-
-
-/* Individual Order Card */
 
 .order-item {
     display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
-    align-items: start;
-    gap: 30px;
-    border: 1px solid #cfcfcf;
-    padding: 20px;
-    margin: 20px 0px;
+    grid-template-columns: 48px 1fr auto auto auto;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 20px;
     font-size: 14px;
-    color: #454545;
-    border-radius: 4px;
+    color: #334155;
+    transition: box-shadow 0.2s;
 }
 
-
-/* Parcel Icon styling */
+.order-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
 
 .order-item img {
-    width: 50px;
-}
-
-
-/* Text elements inside the card */
-
-.order-item-food,
-.order-item-name {
-    font-weight: 600;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
 }
 
 .order-item-food {
-    margin-bottom: 5px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 4px;
 }
 
 .order-item-name {
-    margin-top: 10px;
-    color: #000;
+    font-weight: 500;
+    color: #475569;
+    font-size: 13px;
 }
 
-.order-item-address {
-    margin-top: 5px;
+.order-item-address p {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 2px;
     line-height: 1.4;
 }
 
 .order-item-phone {
-    margin-top: 5px;
-    font-weight: 500;
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 4px;
 }
-
-
-/* Status Dropdown Styling */
 
 .order-item select {
-    background-color: #fff4f2;
-    border: 1px solid #ff6347;
-    width: max-content;
-    padding: 10px;
-    outline: none;
-    border-radius: 4px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
     cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
-
-/* Empty State Styling */
+.order-item select:focus {
+    border-color: #3b82f6;
+}
 
 .no-orders {
     text-align: center;
-    padding: 50px;
-    color: #a3a3a3;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    color: #94a3b8;
 }
 
+.no-orders h3 { font-size: 18px; color: #64748b; margin-bottom: 8px; }
+
 .loading-container {
-    height: 100%;
-    margin-top: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 80px;
 }
 
 .loading-text {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
+    color: #94a3b8;
     position: relative;
 }
 
@@ -102,41 +113,16 @@
 }
 
 @keyframes dots {
-    0% {
-        content: "";
-    }
-    33% {
-        content: ".";
-    }
-    66% {
-        content: "..";
-    }
-    100% {
-        content: "...";
-    }
+    0%   { content: ""; }
+    33%  { content: "."; }
+    66%  { content: ".."; }
+    100% { content: "..."; }
 }
 
-
-/* Responsive adjustments for Tablets/Mobile */
-
 @media (max-width: 900px) {
-    .order-item {
-        grid-template-columns: 0.5fr 2fr 1fr;
-        font-size: 12px;
-        gap: 15px;
-    }
-    .order-item select {
-        padding: 5px;
-    }
+    .order-item { grid-template-columns: 40px 1fr auto; font-size: 12px; }
 }
 
 @media (max-width: 600px) {
-    .order-item {
-        display: flex;
-        flex-direction: column;
-        padding: 15px;
-    }
-    .order-item img {
-        width: 40px;
-    }
+    .order-item { display: flex; flex-direction: column; }
 }

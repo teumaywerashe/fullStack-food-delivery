@@ -11,7 +11,7 @@ import MyOrders from "./pages/myOrders/MyOrders";
 import { ToastContainer } from "react-toastify";
 import AdminHome from "./pages/adminHome/AdminHome";
 import Notification from "./components/notification/Notification";
-import { StoreContext } from "./context/StoreContext";
+import { StoreContext } from "./context/ContextProvider";
 import ProfilePage from "./components/ProfilePage";
 
 
@@ -27,8 +27,12 @@ const {showLogin,setShowLogin}=useContext(StoreContext)
       <ToastContainer />
        <Notification />
       {showLogin ? <Login setShowLogin={setShowLogin} /> : <></>}
+      {!isAdminRoute && (
+        <div className="navbar-wrapper">
+          <Navbar setShowLogin={setShowLogin} />
+        </div>
+      )}
       <div className="app">
-        {!isAdminRoute && <Navbar setShowLogin={setShowLogin} />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin/*" element={<AdminHome />} />

@@ -3,7 +3,7 @@ import "./Orders.css";
 import axios from "axios";
 import { useEffect } from "react";
 import { assets } from "../../assets/assets";
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../../context/ContextProvider";
 
 function Orders() {
 

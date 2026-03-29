@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./PlaceOrder.css";
 import "react-phone-input-2/lib/style.css";
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../../context/ContextProvider";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

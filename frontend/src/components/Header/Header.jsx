@@ -1,17 +1,26 @@
 import React from "react";
 import "./Header.css";
+
 function Header() {
   return (
     <div id="home" className="header">
+      {/* Decorative floating emojis */}
+      <span className="header-deco header-deco-1">🍕</span>
+      <span className="header-deco header-deco-2">🍔</span>
+      <span className="header-deco header-deco-3">🌮</span>
+
       <div className="header-content">
-        <h2>Order your favourite food her</h2>
+   
+        <h2>
+          Order your <span>favourite food</span> right here
+        </h2>
         <p>
-          choose from a diverse menu featuring a delectable array of dishes
-          crafited with finest ingredient and culinary expertise.our mission is
-          to satisfy your carving and elivate your dining experience ,one
-          delicious meal at a time
+          Choose from a diverse menu featuring delectable dishes crafted with
+          the finest ingredients. Satisfy your cravings, one delicious meal at a time.
         </p>
-        <a href="#food-display"><button className="hover:text-red-600 bg-red-500" >View Menu</button></a>
+        <a href="#food-display">
+          <button>View Menu</button>
+        </a>
       </div>
     </div>
   );

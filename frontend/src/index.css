@@ -1,100 +1,76 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
+
+:root {
+    --primary: #e8472a;
+    --primary-light: #fff1ee;
+    --secondary: #1a1a2e;
+    --text-main: #1a1a2e;
+    --text-muted: #6b7280;
+    --bg: #f8f8f8;
+    --white: #ffffff;
+    --border: #e5e7eb;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --radius: 12px;
+}
+
 * {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
-    font-family: Outfit;
+    font-family: 'Outfit', sans-serif;
     scroll-behavior: smooth;
 }
 
 body {
     min-height: 100vh;
+    background-color: var(--bg);
+    color: var(--text-main);
 }
 
 hr {
     border: none;
     height: 1px;
-    background-color: #9a9a9a;
+    background-color: var(--border);
 }
 
 a {
-    text-decoration-line: none;
+    text-decoration: none;
+    color: inherit;
 }
 
 .app {
     width: 100%;
-    margin: auto;
-    padding: 10px 10px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
     position: relative;
 }
 
-.app-content {
-    display: flex;
-}
-
-.flex-col {
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
+@media (max-width: 768px) {
+    .app { padding: 0 16px; }
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-:root {
-    --primary: #ff5e3a;
-    /* Modern Delivery Orange */
-    --secondary: #2d3436;
-    /* Dark Charcoal */
-    --bg: #f9f9f9;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    padding: 40px;
-    border-radius: 20px;
-}
-
+/* Logo styles */
 .logo-wrapper {
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    gap: 8px;
     transition: transform 0.3s ease;
-    position: relative;
 }
-
-
-/* SVG Styling */
 
 .logo-icon {
-    width: 120px;
-    position: relative;
-    transition: all 0.3s ease;
+    width: 36px;
 }
 
-.cloche-dome {
-    fill: var(--primary);
-}
-
-.cloche-handle,
-.cloche-plate {
-    fill: var(--secondary);
-}
-
-
-/* Steam/Speed Animation */
+.cloche-dome { fill: var(--primary); }
+.cloche-handle, .cloche-plate { fill: var(--secondary); }
 
 .steam-container {
     position: absolute;
@@ -114,84 +90,38 @@ a {
     border-radius: 2px;
 }
 
-
-/* Hover States */
-
-.logo-wrapper:hover .logo-icon {
-    transform: translateY(-5px) rotate(-5deg);
-}
-
-.logo-wrapper:hover .steam-container {
-    opacity: 1;
-}
-
+.logo-wrapper:hover .logo-icon { transform: translateY(-3px); }
+.logo-wrapper:hover .steam-container { opacity: 1; }
 .logo-wrapper:hover .steam-line {
     animation: steamRise 0.6s infinite alternate ease-in-out;
 }
-
-.logo-wrapper:hover .steam-line:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-.logo-wrapper:hover .steam-line:nth-child(3) {
-    animation-delay: 0.2s;
-}
+.logo-wrapper:hover .steam-line:nth-child(2) { animation-delay: 0.1s; }
+.logo-wrapper:hover .steam-line:nth-child(3) { animation-delay: 0.2s; }
 
 @keyframes steamRise {
-    from {
-        height: 5px;
-        transform: translateY(0);
-    }
-    to {
-        height: 18px;
-        transform: translateY(-10px);
-    }
+    from { height: 5px; transform: translateY(0); }
+    to   { height: 18px; transform: translateY(-10px); }
 }
-
-
-/* Text Styling */
 
 .logo-text {
-    font-family: 'Inter', sans-serif;
     font-weight: 800;
-    font-size: 2.5rem;
-    margin: 10px 0 0 0;
+    font-size: 1.5rem;
     color: var(--secondary);
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
 }
 
-.logo-text span {
-    color: var(--primary);
-}
+.logo-text span { color: var(--primary); }
 
-@layer utilities {
-    .scrollbar-thin::-webkit-scrollbar {
-        width: 6px;
-    }
-    .scrollbar-thin::-webkit-scrollbar-thumb {
-        background-color: #e2e8f0;
-        border-radius: 20px;
-    }
-}
-
-
-/* Delivery "Launch" Animation */
-
+/* Delivery animation */
 .delivering {
     animation: driveOff 1.2s forwards cubic-bezier(0.45, 0, 0.55, 1);
     pointer-events: none;
 }
 
 @keyframes driveOff {
-    0% {
-        transform: translateX(0);
-    }
-    20% {
-        transform: translateX(-15px);
-    }
-    100% {
-        transform: translateX(100vw);
-    }
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-15px); }
+    100% { transform: translateX(100vw); }
 }
 
 .status-msg {
@@ -201,11 +131,10 @@ a {
     animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
+@layer utilities {
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: #e2e8f0;
+        border-radius: 20px;
     }
 }

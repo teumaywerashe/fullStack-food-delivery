@@ -1,68 +1,69 @@
-/* Sidebar.css */
-
 .sidebar {
-    width: 18%;
-    min-height: 90vh;
-    margin-right: 10px;
-    border: 1.5px solid #a9a9a9;
-    border-top: none;
-    font-size: max(1vw, 10px);
+    width: 220px;
+    min-height: calc(100vh - 60px);
+    background: #0f172a;
+    border-right: 1px solid #1e293b;
+    flex-shrink: 0;
+    padding: 24px 0;
 }
 
 .sidebar-options {
-    padding-top: 50px;
-    padding-left: 20%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 4px;
+    padding: 0 12px;
+}
+
+.sidebar-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0 12px;
+    margin-bottom: 8px;
 }
 
 .sidebar-option {
     display: flex;
     align-items: center;
     gap: 12px;
-    border: 1px solid #a9a9a9;
-    border-right: 0;
-    padding: 8px 10px;
-    border-radius: 3px 0 0 3px;
+    padding: 10px 14px;
+    border-radius: 8px;
     cursor: pointer;
     text-decoration: none;
-    color: inherit;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+    border: none;
+    background: none;
 }
 
-.sidebar-option img {
-    width: 25px;
+.sidebar-option:hover {
+    background: #1e293b;
+    color: #e2e8f0;
 }
-
-
-/* NavLink automatically adds the 'active' class when the route matches */
 
 .sidebar-option.active {
-    background-color: #fff0ed;
-    border-color: tomato;
+    background: #1e3a5f;
+    color: #60a5fa;
+}
+
+.sidebar-option.active svg {
+    color: #60a5fa;
 }
 
 .sidebar-option p {
     display: block;
 }
 
-
-/* Responsive: Hide text on small screens or adjust width */
-
 @media (max-width: 900px) {
-    .sidebar {
-        width: 12%;
-    }
-    .sidebar-option p {
-        display: none;
-    }
-    .sidebar-options {
-        padding-left: 15%;
-    }
+    .sidebar { width: 64px; }
+    .sidebar-option p { display: none; }
+    .sidebar-label { display: none; }
 }
 
 @media (max-width: 600px) {
-    .sidebar {
-        width: 15%;
-    }
+    .sidebar { width: 56px; }
 }

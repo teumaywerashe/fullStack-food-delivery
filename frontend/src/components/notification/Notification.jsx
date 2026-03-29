@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../../context/ContextProvider";
 import { Bell, X, Inbox, Clock, User, CheckCircle } from "lucide-react";
 
 function Notification() {

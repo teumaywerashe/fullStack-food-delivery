@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
 import { useContext } from "react";
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../../context/ContextProvider";
 import { assets } from "../../assets/assets.js";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const Login = ({ setShowLogin }) => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState(null);
-  const { url, setToken, setUserId } = useContext(StoreContext);
+  const { url, setToken, setUserId, setUserName, setUserEmail } = useContext(StoreContext);
   const [showPassord,setShowPassword]=useState(false);
 
   let [data, setData] = useState({
@@ -48,8 +48,12 @@ const Login = ({ setShowLogin }) => {
 
         setToken(response.data.token);
         setUserId(response.data.user._id);
+        setUserName(response.data.user.name);
+        setUserEmail(response.data.user.email);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.user._id);
+        localStorage.setItem("userName", response.data.user.name);
+        localStorage.setItem("userEmail", response.data.user.email);
         // console.log(response.data);
         setShowLogin(false);
       } else {

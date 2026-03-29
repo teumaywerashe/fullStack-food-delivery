@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./FoodItem.css";
 import { assets } from "../../assets/assets.js";
 
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../../context/ContextProvider";
 const FoodItem = ({ id, name, price, description, image }) => {
   const { cartItem, url, addToCart, fetchFoodList, removeFromCart } =
     useContext(StoreContext);

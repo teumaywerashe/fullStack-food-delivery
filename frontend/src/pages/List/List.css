@@ -1,104 +1,106 @@
-/* Container Spacing */
-
 .list {
-    padding: 20px;
-    color: #555555;
-    width: 100%;
-}
-
-.flex-col {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
-.list p {
-    font-weight: 600;
-    font-size: 1.2rem;
+.list > p {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
 }
-
-
-/* Table Wrapper */
 
 .list-table {
-    border: 1px solid #e2e2e2;
-    border-radius: 4px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
     overflow: hidden;
 }
 
-
-/* Using CSS Grid for perfect alignment across rows */
-
 .list-table-format {
     display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr 0.5fr;
+    grid-template-columns: 56px 2fr 1fr 1fr 1fr 80px;
     align-items: center;
-    gap: 15px;
-    padding: 12px 15px;
-    border-bottom: 1px solid #e2e2e2;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f5f9;
     font-size: 14px;
+    color: #334155;
 }
 
-
-/* Header Styling */
+.list-table-format:last-child { border-bottom: none; }
 
 .list-table-format.title {
-    background-color: #f9f9f9;
-    color: #000;
-    font-size: 15px;
+    background: #f8fafc;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
 }
-
-
-/* Image Styling */
 
 .list-table-format img {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
 }
-
-
-/* Remove button (The 'X') */
 
 .cursor {
     display: flex;
-    gap: 30px;
-    justify-content: space-between;
-    padding: 6px 8px;
+    gap: 8px;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
     cursor: pointer;
-    /* color: #ff4d4d; */
-    font-weight: bold;
-    text-align: center;
-    transition: transform 0.2s ease;
 }
 
-.cursor:hover {
-    background-color: rgb(242, 244, 242);
-    border: 1px solid rgb(6, 224, 60);
+.list-table-format .edit {
+    color: #94a3b8;
+    transition: color 0.2s;
+    cursor: pointer;
 }
 
-.cursor:hover {
-    transform: scale(1.2);
+.list-table-format .edit:hover { color: #3b82f6; }
+
+.list-table-format .delete {
+    color: #94a3b8;
+    transition: color 0.2s;
+    cursor: pointer;
 }
 
-.list-table-format .delete:hover {
-    color: red;
+.list-table-format .delete:hover { color: #f43f5e; }
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
 }
 
-.list-table-format .edit:hover {
-    color: rgb(12, 232, 89);
+.loading-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #94a3b8;
+    position: relative;
 }
 
-@media (max-width: 600px) {
-    .list-table-format {
-        grid-template-columns: 1fr 2fr 1fr;
-        /* Hide price/category or re-stack */
-        font-size: 12px;
-    }
-    /* Hide specific columns on mobile if it gets too crowded */
-    .list-table-format b:nth-of-type(3),
-    .list-table-format p:nth-of-type(2) {
-        display: none;
-    }
+.loading-text::after {
+    content: "";
+    position: absolute;
+    animation: dots 1.5s steps(3, end) infinite;
+}
+
+@keyframes dots {
+    0%   { content: ""; }
+    33%  { content: "."; }
+    66%  { content: ".."; }
+    100% { content: "..."; }
+}
+
+@media (max-width: 700px) {
+    .list-table-format { grid-template-columns: 48px 2fr 1fr 60px; font-size: 12px; }
 }

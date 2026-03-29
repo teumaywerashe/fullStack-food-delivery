@@ -4,7 +4,7 @@ import "./Add.css";
 import { useState } from "react";
 import axios from "axios";
 import { assets } from "../../assets/assets";
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../../context/ContextProvider";
 
 function Add() {
   const [image, setImage] = useState(false);
