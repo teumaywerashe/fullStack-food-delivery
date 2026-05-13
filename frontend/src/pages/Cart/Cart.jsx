@@ -8,7 +8,7 @@ const Cart = () => {
     useContext(StoreContext);
    useEffect(()=>{
     loadCartData(token)
-    // console.log("cart Item",cartItem)
+    console.log("cart Item",food_list)
    })
   return (
     <div className="cart">
@@ -28,7 +28,7 @@ const Cart = () => {
             return (
               <div key={index}>
                 <div key={index} className="cart-items-item cart-items-title">
-                  <img src={url + "/images/" + item.image} alt="" />
+                  <img src={item.image} alt="" />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItem[item._id]}</p>
